@@ -15,23 +15,29 @@
 
   /* 导航 */
   nav {
-    background-color: #2c3e50;
-    padding: 12px 20px;
-    text-align: center;
-  }
-  nav a {
-    color: #ecf0f1;
-    text-decoration: none;
-    margin: 0 10px;
-    font-size: 14px;
-  }
-  nav a:hover {
-    color: #f39c12;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: #2c3e50;
+  padding: 12px 20px;
+}
+
+nav a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #f39c12;
+}
 
   /* 头部 */
   header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(35deg, #667eea 0%, #764ba2 100%);
     color: white;
     text-align: center;
     padding: 30px 20px;
@@ -150,7 +156,7 @@
     <section id="skills">
       <h2>三打白骨精的金箍棒</h2>
       <ul>
-        <li>觉林菩萨偈 ✅ 一体万象用，五蕴一心动。不住二元里，清醒红尘中。</li>
+        <li>觉林菩萨偈 ✅ 五蕴一心动，一体万象用。不住二元里，随缘红尘中。</li>
         <li>前端学习中，HTML ✅ 学习中</li>
         <li>MYSQL实践中，MRP递归计算</li>
         <li>Python上位机下位机</li>
