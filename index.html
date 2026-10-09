@@ -9,7 +9,7 @@
     background-color: #f5f5f5;
     margin: 0;
     padding: 0;
-    line-height: 1.8;
+    line-height: 1.5;
     color: #333;
   }
 
@@ -34,7 +34,7 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     text-align: center;
-    padding: 40px 20px;
+    padding: 30px 20px;
   }
   header h1 {
     margin: 0 0 10px 0;
@@ -42,7 +42,7 @@
   }
   header p {
     margin: 5px 0;
-    font-size: 16px;
+    font-size: 26px;
     opacity: 0.9;
   }
 
@@ -79,6 +79,9 @@
   a {
     color: #3498db;
   }
+  a:hover {
+  color: #f39c12;
+  }
 
   /* 图片 */
   img {
@@ -90,7 +93,17 @@
   border-radius: 20%;
   border: 3px solid #667eea;
   }
-
+.qrcode-wrapper {
+  display: inline-block;
+  padding: 8px;
+  border-radius: 20%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.25);
+}
+.qrcode-wrapper img {
+  border-radius: 4px;
+  display: block;
+}
   /* 底部 */
   footer {
     text-align: center;
@@ -137,7 +150,7 @@
     <section id="skills">
       <h2>三打白骨精的金箍棒</h2>
       <ul>
-        <li>觉林菩萨偈 ✅ 空的不空性，不空的空性；心的不住性，不住的心性；一体万象用，清醒红尘中。</li>
+        <li>觉林菩萨偈 ✅ 一体万象用，五蕴一心动。不住二元里，清醒红尘中。</li>
         <li>前端学习中，HTML ✅ 学习中</li>
         <li>MYSQL实践中，MRP递归计算</li>
         <li>Python上位机下位机</li>
@@ -157,8 +170,9 @@
         <a href="mailto:18651666602@qq.com">给我发邮件</a>
       </p>
 
-      <h2>留言给我</h2>
+      <div class="qrcode-wrapper">
       <img src="./images/jzlwechat2.jpg" alt="微信二维码" width="250">
+      </div>
       <p>后会有期哦！</p>
     </section>
   </main>
