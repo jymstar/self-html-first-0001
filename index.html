@@ -130,6 +130,47 @@ nav a:hover {
   margin: 0;
 }
 
+.hello-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.hello-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+.hello-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.hello-grid figure {
+  margin: 0;
+  text-align: center;
+}
+
+.hello-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20%;
+  display: block;
+  border: 3px solid #a06f79;
+}
+
+.hello-grid figcaption {
+  margin-top: 8px;
+  color: #ca9823;
+  font-size: 16px;
+}
+
+
 /* footer 并排 */
 .footer-row {
   display: flex;
@@ -261,50 +302,77 @@ footer img {
   </header>
 
   <main>
+
     <section id="value">
-  <h2>我的状态</h2>
-  <div class="about-row">
-    <img src="./images/jzl.jpg" alt="我的头像" width="180">
-    <div class="about-text">
-      <p>我喜欢什么呢？</p>
-      <p>安静的做自己喜欢的事，或者快乐的和朋友聊天。</p>
-      <p>爬山，去寺庙里坐坐，念几句咒语。静静的去，静静的走。</p>
-      <p>当情绪不再是发泄，而只是工具；当压力不再是阻力，而是动力。</p>
-      <p>当一切只是形式，而非本质。</p>
-      <p>你就找到自己了，这才是最快乐的！</p>
-    </div>
-  </div>
-</section>
-<section id="skills">
-  <h2>我的金箍棒</h2>
+      <h2>我的状态</h2>
+      <div class="about-row">
+        <img src="./images/jzl.jpg" alt="我的头像" width="180">
+        <div class="about-text">
+          <p>我喜欢什么呢？</p>
+          <p>安静的做自己喜欢的事，或者快乐的和朋友聊天。</p>
+          <p>爬山，去寺庙里坐坐，念几句咒语。静静的去，静静的走。</p>
+          <p>当情绪不再是发泄，而只是工具；当压力不再是阻力，而是动力。</p>
+          <p>当一切只是形式，而非本质。</p>
+          <p>你就找到自己了，这才是最快乐的！</p>
+        </div>
+      </div>
+    </section>
 
-  <div class="skills-group">
-    <div class="skill-card skill-main">短期目标：ERP项目落地</div>
-    <div class="skill-card">1. 业务流程与软件逻辑的换算</div>
-    <div class="skill-card">2. 软件基本技能的掌握</div>
-    <div class="skills-basic">
-      <div class="skill-card">2.1 前端HTML ✅ 学习中</div>
-      <div class="skill-card">2.2 MYSQL数据库的运算</div>
-      <div class="skill-card">2.3 Python在上位机下位机的应用</div>
-      <div class="skill-card">2.4 RAG在知识库的应用</div>
-       <div class="skill-card">2.5 中台基础模块的提炼</div>
-      <div class="skill-card">2.6 后端 C# 的学习</div>
+    <section id="skills">
+      <h2>我的金箍棒</h2>
+
+      <div class="skills-group">
+        <div class="skill-card skill-main">短期目标：ERP项目落地</div>
+        <div class="skill-card">1. 业务流程与软件逻辑的换算</div>
+        <div class="skill-card">2. 软件基本技能的掌握</div>
+        <div class="skills-basic">
+          <div class="skill-card">2.1 前端HTML ✅ 制作</div>
+          <div class="skill-card">2.2 MYSQL数据库的运算</div>
+          <div class="skill-card">2.3 Python在上位机下位机的应用</div>
+          <div class="skill-card">2.4 RAG在知识库的应用</div>
+           <div class="skill-card">2.5 中台基础模块的提炼</div>
+          <div class="skill-card">2.6 后端 C#  ✅ 码砖</div>
      
-    </div>
-     <div class="skill-card">3. 业务模块、整体布局与逐步完善</div>
-  </div>
+        </div>
+         <div class="skill-card">3. 业务模块、整体布局与逐步完善</div>
+        </div>
 
-  <div class="skills-group">
-    <div class="skill-card skill-main">长期目标：AI/RAG及大模型语言在ERP项目里的实践</div>
-  </div>
+      <div class="skills-group">
 
-  <div class="skills-group">
-    <div class="skill-card skill-insight">
-      <p class="skill-main inline-label">基础目标：空性的领悟，觉林菩萨偈</p>
-      <p>五蕴一心动，一体万象用。不住二元里，随缘红尘中。</p>
-    </div>
+      <div class="skill-card skill-main">长期目标：AI/RAG及大模型语言在ERP项目里的实践</div>
+        </div>
+
+         <div class="skills-group">
+         <div class="skill-card skill-insight">
+         <p class="skill-main inline-label">基础目标：空性的领悟，觉林菩萨偈</p>
+         <p>五蕴一心动，一体万象用。不住二元里，随缘红尘中。</p>
+        </div>
+       </div>
+    </section>
+
+
+
+<section id="about">
+  <h2>生活日常</h2>
+
+  <div class="hello-grid">
+    <figure>
+      <img src="./images/青菜.jpg" alt="青菜">
+      <figcaption>青菜</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./images/清茶.jpg" alt="清茶">
+      <figcaption>清茶</figcaption>
+    </figure>
+
+    <figure>
+      <img src="./images/清晨.jpg" alt="清心">
+      <figcaption>清心</figcaption>
+    </figure>
   </div>
 </section>
+
 
 <footer>
   <section id="contact">
