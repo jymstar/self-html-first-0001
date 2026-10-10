@@ -72,51 +72,129 @@ nav a:hover {
     border-left: 4px solid #667eea;
     padding-left: 12px;
   }
-
-  /* 列表 */
-  ul {
-    padding-left: 20px;
-  }
-  li {
-    margin: 8px 0;
-  }
-
-  /* 链接 */
-  a {
-    color: #3498db;
-  }
-  a:hover {
-  color: #f39c12;
-  }
-
-  /* 图片 */
-  img {
-    border-radius: 8px;
-    display: block;
-    margin: 10px 0;
-  }
-  #contact img {
-  border-radius: 20%;
-  border: 3px solid #667eea;
-  }
-.qrcode-wrapper {
-  display: inline-block;
-  padding: 8px;
-  border-radius: 20%;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.25);
+.about-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
 }
-.qrcode-wrapper img {
-  border-radius: 4px;
+
+.about-row img {
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.about-text {
+  flex: 1;
+}
+/* 技能区整体 */
+/* 每个目标块之间有点距离 */
+.skills-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* 三个目标标题加粗，占满一行 */
+.skill-main {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+/* 短期目标下面的分支：两列，一行两列 */
+.skills-basic {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* 保持卡片样式 */
+.skill-card {
+  background: linear-gradient(135deg, #667eea22, #764ba222);
+  border: 1px solid #667eea44;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.skill-insight p {
+  margin: 0;
+}
+
+.skill-insight p + p {
+  margin-top: 6px;
+}
+
+.inline-label {
+  margin: 0;
+}
+
+/* footer 并排 */
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.qr-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+footer img {
   display: block;
 }
-  /* 底部 */
-  footer {
-    text-align: center;
-    padding: 20px;
-    color: #999;
-    font-size: 14px;
+
+  
+@media (max-width: 600px) {
+  .skills-split {
+    flex-direction: column;
   }
+
+  @media (max-width: 600px) {
+  .skills-basic {
+    grid-template-columns: 1fr;
+  }
+}
+
+  .footer-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+  }
+
+  .footer-left {
+    align-items: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+}
 </style>
   <meta charset="UTF-8">
   <title>心就是梯子-而我就是通天的梯</title>
@@ -138,54 +216,66 @@ nav a:hover {
   </header>
 
   <main>
-    <section id="about">
-      <h2>是个工作狂</h2>
-      <img src="./images/jzl.jpg" alt="我的头像" width="250">
-    </section>
-
     <section id="value">
-      <h2>我的状态</h2>
+  <h2>我的状态</h2>
+  <div class="about-row">
+    <img src="./images/jzl.jpg" alt="我的头像" width="180">
+    <div class="about-text">
       <p>我喜欢什么呢？</p>
       <p>安静的做自己喜欢的事，或者快乐的和朋友聊天。</p>
-      <p>爬山去寺庙里坐坐，念几句咒语。静静的去，静静的走。</p>
+      <p>爬山，去寺庙里坐坐，念几句咒语。静静的去，静静的走。</p>
       <p>当情绪不再是发泄，而只是工具；当压力不再是阻力，而是动力。</p>
       <p>当一切只是形式，而非本质。</p>
       <p>你就找到自己了，这才是最快乐的！</p>
-    </section>
+    </div>
+  </div>
+</section>
+<section id="skills">
+  <h2>我的金箍棒</h2>
 
-    <section id="skills">
-      <h2>三打白骨精的金箍棒</h2>
-      <ul>
-        <li>觉林菩萨偈 ✅ 五蕴一心动，一体万象用。不住二元里，随缘红尘中。</li>
-        <li>前端学习中，HTML ✅ 学习中</li>
-        <li>MYSQL实践中，MRP递归计算</li>
-        <li>Python上位机下位机</li>
-        <li>后端 C# 也跑不了，待追赶</li>
-        <li>AI RAG 待实践</li>
-        <li>短期目标：ERP项目落地</li>
-      </ul>
-    </section>
+  <div class="skills-group">
+    <div class="skill-card skill-main">短期目标：ERP项目落地</div>
 
-    <section id="contact">
-      <h2>联系方式</h2>
-      <p>
+    <div class="skills-basic">
+      <div class="skill-card">前端 HTML ✅ 学习中</div>
+      <div class="skill-card">MYSQL MRP递归计算</div>
+      <div class="skill-card">Python 上位机下位机</div>
+      <div class="skill-card">后端 C# 待追赶</div>
+    </div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skill-card skill-main">长期目标：AI RAG 在ERP项目里的实践</div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skill-card skill-insight">
+      <p class="skill-main inline-label">基础目标：空性的领悟，觉林菩萨偈</p>
+      <p>五蕴一心动，一体万象用。不住二元里，随缘红尘中。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-row">
+     <div class="footer-left">
+      <p class="qr-title">福星高照</p>
+      <img src="./images/jzlwechat2.jpg" alt="微信二维码" width="180">
+    </div>
+    
+    <div class="footer-right">
+     
+      <p class="footer-links">
         <a href="https://github.com/jymstar" target="_blank">我的 GitHub</a>
-        <br>
         <a href="https://jymstar.github.io/self-html-first-0001/" target="_blank">在线预览我的网页</a>
-        <br>
         <a href="mailto:18651666602@qq.com">给我发邮件</a>
       </p>
+       <p>© 2026 兆林 · 心就是梯子</p>
+    </div>
 
-      <div class="qrcode-wrapper">
-      <img src="./images/jzlwechat2.jpg" alt="微信二维码" width="250">
-      </div>
-      <p>后会有期哦！</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2026 兆林 · 心就是梯子</p>
-  </footer>
+   
+  </div>
+</footer>
 
 </body>
 </html>
