@@ -135,56 +135,100 @@ nav a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 24px;
+  gap: 14px;
   max-width: 800px;
   margin: 0 auto;
-}
-
-.footer-left {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.footer-links {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
 }
 
 .footer-right {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 2px;              /* 原来6px */
+}
+
+.footer-links {
+  display: flex;
+  gap: 6px;              /* 链接之间间距，可保持或改4px */
+  flex-wrap: wrap;
+  margin: 0;             /* 防 p 默认 margin */
+}
+
+.footer-right p {
+  margin: 0;             /* 版权行默认 margin 也清掉 */
+}
+
+#contact {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .qr-title {
   margin: 0;
   font-weight: 600;
 }
+.blessing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;              /* 星星和文字间距，原来10px */
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #333;
+  margin: 0.3;             /* 关键：去掉 p 默认上下外边距 ，0的时候太小了没间隙，改0.3*/
+  line-height: 1;        /* 可避免文字行高撑高 */
+}
 
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;              /* 福星高照 和 二维码之间，原来8px */
+}
+/* 左右红色五角星 */
+.blessing::before,
+.blessing::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: #d92323;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  display: inline-block;
+}
 footer img {
   display: block;
 }
-
-  
+.blessing {
+  color: #d92323;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin: 0;
+  line-height: 1;
+}
 @media (max-width: 600px) {
   .skills-split {
     flex-direction: column;
   }
 
-  @media (max-width: 600px) {
   .skills-basic {
     grid-template-columns: 1fr;
   }
-}
 
   .footer-row {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 18px;
+    gap: 12px;
   }
 
   .footer-left {
@@ -195,6 +239,7 @@ footer img {
     justify-content: center;
   }
 }
+
 </style>
   <meta charset="UTF-8">
   <title>心就是梯子-而我就是通天的梯</title>
@@ -235,17 +280,22 @@ footer img {
 
   <div class="skills-group">
     <div class="skill-card skill-main">短期目标：ERP项目落地</div>
-
+    <div class="skill-card">1. 业务流程与软件逻辑的换算</div>
+    <div class="skill-card">2. 软件基本技能的掌握</div>
     <div class="skills-basic">
-      <div class="skill-card">前端 HTML ✅ 学习中</div>
-      <div class="skill-card">MYSQL MRP递归计算</div>
-      <div class="skill-card">Python 上位机下位机</div>
-      <div class="skill-card">后端 C# 待追赶</div>
+      <div class="skill-card">2.1 前端HTML ✅ 学习中</div>
+      <div class="skill-card">2.2 MYSQL数据库的运算</div>
+      <div class="skill-card">2.3 Python在上位机下位机的应用</div>
+      <div class="skill-card">2.4 RAG在知识库的应用</div>
+       <div class="skill-card">2.5 中台基础模块的提炼</div>
+      <div class="skill-card">2.6 后端 C# 的学习</div>
+     
     </div>
+     <div class="skill-card">3. 业务模块、整体布局与逐步完善</div>
   </div>
 
   <div class="skills-group">
-    <div class="skill-card skill-main">长期目标：AI RAG 在ERP项目里的实践</div>
+    <div class="skill-card skill-main">长期目标：AI/RAG及大模型语言在ERP项目里的实践</div>
   </div>
 
   <div class="skills-group">
@@ -257,9 +307,14 @@ footer img {
 </section>
 
 <footer>
-  <div class="footer-row">
+  <section id="contact">
+   <div   class="footer-row">
      <div class="footer-left">
-      <p class="qr-title">福星高照</p>
+       <p class="blessing">
+          <span class="stars">★</span>
+          <span>福星高照</span>
+          <span class="stars">★</span>
+       </p>
       <img src="./images/jzlwechat2.jpg" alt="微信二维码" width="180">
     </div>
     
@@ -274,7 +329,8 @@ footer img {
     </div>
 
    
-  </div>
+   </div>
+  </section>
 </footer>
 
 </body>
