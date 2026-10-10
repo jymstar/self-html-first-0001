@@ -51,7 +51,11 @@ nav a:hover {
     font-size: 26px;
     opacity: 0.9;
   }
-
+header img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
   /* 主体 */
   main {
     max-width: 800px;
@@ -181,22 +185,50 @@ nav a:hover {
   margin: 0 auto;
 }
 
-.footer-right {
+.footer-middle {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2px;              /* 原来6px */
+  align-items: last baseline;
+  gap: 12px;              /* 原来6px */
 }
 
 .footer-links {
   display: flex;
-  gap: 6px;              /* 链接之间间距，可保持或改4px */
+  gap: 16px;              /* 链接之间间距，可保持或改4px */
   flex-wrap: wrap;
+  flex-direction: column;
   margin: 0;             /* 防 p 默认 margin */
 }
 
-.footer-right p {
+.footer-middle p {
   margin: 0;             /* 版权行默认 margin 也清掉 */
+}
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: last baseline;
+  gap: 0px;              /* 原来6px */
+}
+
+.footer-right{
+  margin: 0;
+  text-align: center;
+}
+.footer-right p {
+  margin: 0;
+  line-height: 1.5;
+  color: #555;
+}
+
+.footer-right p:last-of-type {
+  margin-top: 18px;
+  font-size: 14px;
+  color: #888;
+}
+.copyright {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #999;
 }
 
 #contact {
@@ -296,15 +328,14 @@ footer img {
   </nav>
 
   <header>
-    <h1>您好！我是兆林。</h1>
-    <p>一夜秋风萧萧杀，万千戾气凝成沙。</p>
-    <p>且将沙石炼砖瓦，砌壁挡尘化莲花！</p>
+    <h1>请欣赏，《沁园春-北国风光》</h1>
+     <img src="./images/沁园春.jpg" alt="我的欣赏" >
   </header>
 
   <main>
 
     <section id="value">
-      <h2>我的状态</h2>
+      <h2>保持好的状态</h2>
       <div class="about-row">
         <img src="./images/jzl.jpg" alt="我的头像" width="180">
         <div class="about-text">
@@ -319,7 +350,7 @@ footer img {
     </section>
 
     <section id="skills">
-      <h2>我的金箍棒</h2>
+      <h2>做能落地的事</h2>
 
       <div class="skills-group">
         <div class="skill-card skill-main">短期目标：ERP项目落地</div>
@@ -330,7 +361,7 @@ footer img {
           <div class="skill-card">2.2 MYSQL数据库的运算</div>
           <div class="skill-card">2.3 Python在上位机下位机的应用</div>
           <div class="skill-card">2.4 RAG在知识库的应用</div>
-           <div class="skill-card">2.5 中台基础模块的提炼</div>
+          <div class="skill-card">2.5 中台基础模块的提炼</div>
           <div class="skill-card">2.6 后端 C#  ✅ 码砖</div>
      
         </div>
@@ -353,7 +384,7 @@ footer img {
 
 
 <section id="about">
-  <h2>生活日常</h2>
+  <h2>一切源自生活</h2>
 
   <div class="hello-grid">
     <figure>
@@ -376,7 +407,9 @@ footer img {
 
 <footer>
   <section id="contact">
+   <h2>我们一起合作</h2>
    <div   class="footer-row">
+
      <div class="footer-left">
        <p class="blessing">
           <span class="stars">★</span>
@@ -384,18 +417,24 @@ footer img {
           <span class="stars">★</span>
        </p>
       <img src="./images/jzlwechat2.jpg" alt="微信二维码" width="180">
-    </div>
+     </div>
     
-    <div class="footer-right">
-     
+     <div class="footer-middle">
       <p class="footer-links">
         <a href="https://github.com/jymstar" target="_blank">我的 GitHub</a>
         <a href="https://jymstar.github.io/self-html-first-0001/" target="_blank">在线预览我的网页</a>
         <a href="mailto:18651666602@qq.com">给我发邮件</a>
       </p>
-       <p>© 2026 兆林 · 心就是梯子</p>
-    </div>
-
+      
+     </div>
+     <div class="footer-right">
+          <p>一夜秋风萧萧杀，</p>
+          <p>万千戾气凝成沙。</p>
+          <p>且将沙石炼砖瓦，</p>
+          <p>砌壁挡尘化莲花！</p>
+           
+         <p class="copyright">© 2026 兆林 · 心就是梯子</p>
+     </div>
    
    </div>
   </section>
