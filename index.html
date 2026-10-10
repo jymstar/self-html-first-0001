@@ -102,7 +102,11 @@ header img {
 /* 三个目标标题加粗，占满一行 */
 .skill-main {
   font-weight: 700;
+  font-size: 18px;
+  color: #1707c5;
   letter-spacing: 0.2px;
+  grid-column: span 2;
+  text-align: left;
 }
 
 /* 短期目标下面的分支：两列，一行两列 */
@@ -134,13 +138,54 @@ header img {
   margin: 0;
 }
 
-.hello-grid {
+.skill-main {
+  grid-column: span 2;
+  font-weight: 700;
+  font-size: 22px;
+  color: #1707c5;
+  text-align: left;
+  letter-spacing: 0.2px;
+
+  /* 如果它在 grid 里，想让它表现像标题，可以加 */
+  margin: 8px 0 12px;
+}
+
+.skill-main-text {
+  font-weight: 700;
+  font-size: 22px;
+  color: #1707c5;
+  margin: 0 0 8px;
+}
+
+.skill-card {
+  /* 这里不要写会冲突的大字号/影响标题的样式 */
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #ececf6;
+  color: #333;
+  font-size: 18px;
+}
+
+.skills-basic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  grid-column: span 2;
+}
+
+.skill-insight p {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.life-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 12px;
 }
 
-.hello-grid img {
+.life-grid img {
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -148,18 +193,18 @@ header img {
 }
 
 
-.hello-grid {
+.life-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 12px;
 }
 
-.hello-grid figure {
+.life-grid figure {
   margin: 0;
   text-align: center;
 }
 
-.hello-grid img {
+.life-grid img {
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -328,7 +373,7 @@ footer img {
   </nav>
 
   <header>
-    <h1>请欣赏，《沁园春-北国风光》</h1>
+    <h1>请欣赏：《沁园春-雪》</h1>
      <img src="./images/沁园春.jpg" alt="我的欣赏" >
   </header>
 
@@ -349,44 +394,45 @@ footer img {
       </div>
     </section>
 
-    <section id="skills">
-      <h2>做能落地的事</h2>
+  <section id="skills">
+  <h2>做能落地的事</h2>
 
-      <div class="skills-group">
-        <div class="skill-card skill-main">短期目标：ERP项目落地</div>
-        <div class="skill-card">1. 业务流程与软件逻辑的换算</div>
-        <div class="skill-card">2. 软件基本技能的掌握</div>
-        <div class="skills-basic">
-          <div class="skill-card">2.1 前端HTML ✅ 制作</div>
-          <div class="skill-card">2.2 MYSQL数据库的运算</div>
-          <div class="skill-card">2.3 Python在上位机下位机的应用</div>
-          <div class="skill-card">2.4 RAG在知识库的应用</div>
-          <div class="skill-card">2.5 中台基础模块的提炼</div>
-          <div class="skill-card">2.6 后端 C#  ✅ 码砖</div>
-     
-        </div>
-         <div class="skill-card">3. 业务模块、整体布局与逐步完善</div>
-        </div>
+  <div class="skills-group">
+    <div class="skill-main">短期目标：ERP项目落地</div>
 
-      <div class="skills-group">
+    <div class="skill-card">1. 业务流程与软件逻辑的换算</div>
+    <div class="skill-card">2. 软件基本技能的掌握</div>
 
-      <div class="skill-card skill-main">长期目标：AI/RAG及大模型语言在ERP项目里的实践</div>
-        </div>
+    <div class="skills-basic">
+      <div class="skill-card">2.1 前端HTML ✅ 制作</div>
+      <div class="skill-card">2.2 MYSQL数据库的运算</div>
+      <div class="skill-card">2.3 Python在上位机下位机的应用</div>
+      <div class="skill-card">2.4 RAG在知识库的应用</div>
+      <div class="skill-card">2.5 中台基础模块的提炼</div>
+      <div class="skill-card">2.6 后端 C# ✅ 码砖</div>
+    </div>
 
-         <div class="skills-group">
-         <div class="skill-card skill-insight">
-         <p class="skill-main inline-label">基础目标：空性的领悟，觉林菩萨偈</p>
-         <p>五蕴一心动，一体万象用。不住二元里，随缘红尘中。</p>
-        </div>
-       </div>
-    </section>
+    <div class="skill-card">3. 业务模块、整体布局与逐步完善</div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skill-main">长期目标：AI/RAG及大模型语言在ERP项目里的实践</div>
+  </div>
+
+  <div class="skills-group">
+    <div class="skill-card skill-insight">
+      <p class="skill-main-text">基础目标：空性的领悟，觉林菩萨偈</p>
+      <p>五蕴一心动，一体万象用。不住二元里，随缘红尘中。</p>
+    </div>
+  </div>
+</section>
 
 
 
 <section id="about">
   <h2>一切源自生活</h2>
 
-  <div class="hello-grid">
+  <div class="life-grid">
     <figure>
       <img src="./images/青菜.jpg" alt="青菜">
       <figcaption>青菜</figcaption>
