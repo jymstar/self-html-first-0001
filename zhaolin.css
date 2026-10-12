@@ -1,0 +1,347 @@
+ /* 全局 */
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  /* 导航 */
+  nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: #2c3e50;
+  padding: 12px 20px;
+}
+
+nav a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #f39c12;
+}
+
+  /* 头部 */
+  header {
+  background: linear-gradient(35deg, #667eea 0%, #764ba2 100%);
+  color: rgb(241, 173, 212);
+  text-align: left;
+  padding: 10px 10px;
+}
+
+header h1 {
+  margin: 0 0 10px 0;
+  font-size: 26px;
+  line-height: 1.4;
+}
+
+.about-title1 {
+  color: rgb(231, 227, 197);
+}
+
+.about-title2 {
+  color: rgb(220, 206, 125);
+  /* 如果想第二个颜色不同，例如： */
+  /* color: rgb(255, 220, 120); */
+}
+.about-title3 {
+  color: rgb(232, 45, 12);
+}
+.about-title4 {
+  color: rgb(223, 205, 10);
+}
+.about-title5 {
+  color: #f6f5f5;
+}
+header img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+  /* 主体 */
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  /* 每个区块 */
+  section {
+    background: white;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  section h2 {
+    color: #2c3e50;
+    border-left: 4px solid #667eea;
+    padding-left: 12px;
+  }
+.about-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 25px;
+}
+
+.about-row img {
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.about-text {
+  flex: 1;
+}
+/* 技能区整体 */
+/* 每个目标块之间有点距离 */
+.skills-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+/* 三个目标标题加粗，占满一行 */
+
+.skill-main {
+  grid-column: span 2;
+  font-weight: 700;
+  font-size: 22px;
+  color: #1707c5;
+  text-align: left;
+  letter-spacing: 0.2px;
+
+  /* 如果它在 grid 里，想让它表现像标题，可以加 */
+  margin: 8px 0 12px;
+}
+
+.skill-main-text {
+  font-weight: 700;
+  font-size: 22px;
+  color: #1707c5;
+  margin: 0 0 8px;
+}
+
+.skill-card {
+  /* 这里不要写会冲突的大字号/影响标题的样式 */
+  padding: 14px 18px;
+  border-radius: 12px;
+  background: #ececf6;
+  color: #333;
+  font-size: 18px;
+}
+
+.skills-basic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  grid-column: span 2;
+}
+
+.skill-insight p {
+  margin: 0;
+  font-size: 18px;
+  color: #836d6d;
+}
+
+.life-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.life-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+
+.life-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.life-grid figure {
+  margin: 0;
+  text-align: center;
+}
+
+.life-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20%;
+  display: block;
+  border: 3px solid #a06f79;
+}
+
+.life-grid figcaption {
+  margin-top: 8px;
+  color: #ca9823;
+  font-size: 16px;
+}
+.life-grid div{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.life-poem {
+  margin: 0;
+  text-align: center;
+}
+.life-poem p {
+  margin: 0;
+  font-size: 18px;
+  color: #6c5959;
+}
+/* footer 并排 */
+.footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.footer-middle {
+  display: flex;
+  flex-direction: column;
+  align-items: last baseline;
+  gap: 12px;              /* 原来6px */
+}
+
+.footer-links {
+  display: flex;
+  gap: 16px;              /* 链接之间间距，可保持或改4px */
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 0;             /* 防 p 默认 margin */
+}
+
+.footer-middle p {
+  margin: 0;             /* 版权行默认 margin 也清掉 */
+}
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: last baseline;
+  gap: 0px;              /* 原来6px */
+}
+
+.footer-right{
+  margin: 0;
+  text-align: center;
+}
+.footer-right p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 16px;
+  color: #6c5959;
+}
+
+.footer-right p:last-of-type {
+  margin-top: 12px;
+  font-size: 16px;
+  color: #6c5959;
+}
+.copyright {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #999;
+}
+
+#contact {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.qr-title {
+  margin: 0;
+  font-weight: 600;
+}
+.blessing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;              /* 星星和文字间距，原来10px */
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #333;
+  margin: 0.3;             /* 关键：去掉 p 默认上下外边距 ，0的时候太小了没间隙，改0.3*/
+  line-height: 1;        /* 可避免文字行高撑高 */
+}
+
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;              /* 福星高照 和 二维码之间，原来8px */
+}
+/* 左右红色五角星 */
+.blessing::before,
+.blessing::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: #d92323;
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+  display: inline-block;
+}
+footer img {
+  display: block;
+}
+.blessing {
+  color: #d92323;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin: 0;
+  line-height: 1;
+}
+@media (max-width: 600px) {
+  .skills-split {
+    flex-direction: column;
+  }
+
+  .skills-basic {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-row {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .footer-left {
+    align-items: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+}
