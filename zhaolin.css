@@ -273,16 +273,26 @@ header img {
   display: flex;
   flex-direction: column;
   align-items: last baseline;
-  gap: 12px;              /* 原来6px */
+  gap: 16px;              /* 原来6px */
 }
 
 .footer-links {
   display: flex;
-  gap: 16px;              /* 链接之间间距，可保持或改4px */
+  gap: 12px;              /* 链接之间间距，可保持或改4px */
   flex-wrap: wrap;
   flex-direction: column;
   margin: 0;             /* 防 p 默认 margin */
 }
+/* 右侧链接间距 */
+.footer-links a {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #0000EE; /* 保持原色 */
+}
+.footer-links a:last-of-type {
+  margin-bottom: 12px; /* 和版权拉开 */
+}
+
 
 .footer-middle p {
   margin: 0;             /* 版权行默认 margin 也清掉 */
@@ -300,13 +310,13 @@ header img {
 }
 .footer-right p {
   margin: 0;
-  line-height: 1.5;
-  font-size: 16px;
+  line-height: 1.8;
+  font-size: 22px;
   color: #6c5959;
 }
 
-.footer-right p:last-of-type {
-  margin-top: 12px;
+.footer-middle p:last-of-type {
+  margin-top: 16px;
   font-size: 16px;
   color: #6c5959;
 }

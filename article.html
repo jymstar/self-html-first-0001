@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>历史经验</title>
+  <link rel="stylesheet" href="./article.css">
+</head>
+<body>
+  <nav> 
+    
+    <a href="./zhaolin.html#qinyuanchun">首页</a>  |
+    <a href="./zhaolin.html#value">价值观</a> |
+    <a href="./zhaolin.html#skills">技能工具</a> |
+    
+    <a href="./experience.html">历史经验</a> |
+     <a href="./article.html">人间烟火</a> |
+      <a href="./smalltools.html">小工具</a> |
+    <a href="./zhaolin.html#contact">联系方式</a> 
+  </nav>
+  
+  <!-- 可以放在 index.html 或专门的列表页 -->
+   <section>
+<div class="news-list">
+  <div class="news-item">
+    <!-- 跳转到新页面展示，href 携带 id -->
+    <a href="article.html?id=1" class="news-title">关于中秋放假的通知</a>
+    <span class="news-date">2026-10-13</span>
+    <p class="news-summary">中秋节即将到来，具体放假安排及值班要求如下...</p>
+  </div>
+  <div class="news-item">
+    <a href="article.html?id=2" class="news-title">2026年Q3绩效考核启动</a>
+    <span class="news-date">2026-10-01</span>
+    <p class="news-summary">本季度绩效考核将于下周一正式开启，请各部门准备...</p>
+  </div>
+</div>
+
+
+<!-- article.html -->
+<div class="article-container">
+  <h1 id="artTitle">加载中...</h1>
+  <div class="article-meta">
+    <span id="artDate"></span> | <span id="artAuthor"></span>
+  </div>
+  <div class="article-content" id="artContent">
+    <!-- 正文由 JS 填充 -->
+  </div>
+  <a href="javascript:history.back()" class="back-btn">返回列表</a>
+</div>
+</section>
+  <script src="./article.js"></script>
+
+</body>
+</html>

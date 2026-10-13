@@ -2,25 +2,25 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>历史经验 - 小工具</title>
+  <title>小工具</title>
   <!-- 绑定 CSS -->
   <link rel="stylesheet" href="smalltools.css" />
 
 </head>
 <body>
   <nav> 
-    <a href="./index.html#qinyuanchun">首页</a> |
-    <a href="./index.html#value">价值观</a> |
-    <a href="./index.html#skills">技能工具</a> |
+    <a href="./zhaolin.html#qinyuanchun">首页</a> |
+    <a href="./zhaolin.html#value">价值观</a> |
+    <a href="./zhaolin.html#skills">技能工具</a> |
     <a href="./experience.html">历史经验</a> |
-    <a href="./index.html#about">人间烟火</a> |
+    <a href="./article.html">人间烟火</a> |
     <a href="./smalltools.html">小工具</a> |
-    <a href="./index.html#contact">联系方式</a> 
+    <a href="./zhaolin.html#contact">联系方式</a> 
   </nav>
 
   <section class="tool-box">
     <h2>文本统计工具</h2>
-    <textarea id="stTextInput" rows="10" placeholder="输入或导入文本..."></textarea>
+    <textarea id="stTextInput" rows="6" placeholder="输入或导入文本..."></textarea>
     
     <div class="btn-group">
       <button id="stImportBtn">导入文本文件</button>
@@ -37,6 +37,7 @@
 
     <div class="table-wrapper">
       <table id="stResultTable">
+
         <thead>
           <tr>
             <th style="width:60px;">序号</th>
@@ -45,9 +46,14 @@
             <th>汉字 / 符号（同频次合并）</th>
           </tr>
         </thead>
-        <tbody></tbody>
+
+        <tbody>
+            
+        </tbody>
+
       </table>
     </div>
+
   </section>
 
   <script src="./smalltools.js"></script>
