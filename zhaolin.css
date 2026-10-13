@@ -10,16 +10,7 @@
 
   /* 导航 */
 
-nav a {
-  color: #ecf0f1;
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.3s;
-}
 
-nav a:hover {
-  color: #f39c12;
-}
 /* 头部测试固定 */
 nav {
   position: sticky;
@@ -245,6 +236,7 @@ header img {
 
 .life-grid figcaption {
   margin-top: 8px;
+  margin-bottom: 8px;
   color: #ca9823;
   font-size: 16px;
 }
@@ -255,11 +247,15 @@ header img {
 }
 
 .life-poem {
-  margin: 0;
+  margin: 10;
+  background: #8e8ee9;
+  border-radius: 4%;
   text-align: center;
+
 }
 .life-poem p {
   margin: 0;
+  padding: 2px;
   font-size: 18px;
   color: #6c5959;
 }
