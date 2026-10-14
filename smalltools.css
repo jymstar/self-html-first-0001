@@ -1,5 +1,4 @@
-<style>
- { margin: 0; padding: 0; box-sizing: border-box; }
+ *{ margin: 0; padding: 0; box-sizing: border-box; }
     /* 页面基础样式 */
     body {
     font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
@@ -64,7 +63,6 @@ nav a:hover {
     #stTextInput {
       width: 100%;
       min-height: 220px;
-      rows: 10;
       box-sizing: border-box;
       padding: 12px;
       font-size: 16px;
@@ -137,4 +135,3 @@ nav a:hover {
       border-bottom: 2px dashed #ccc;
     }
     .char-space { color: #999; font-size: 13px; }
-  </style>

@@ -1,0 +1,138 @@
+ *{ margin: 0; padding: 0; box-sizing: border-box; }
+    /* 页面基础样式 */
+    body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    color: #333;
+  }
+
+    nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  background-color: #e30606;
+  padding: 12px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+    
+
+
+ section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+    /* 工具区容器 */
+    .tool-box {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    .tool-box h2 {
+      border-left: 5px solid #0055aa;
+      padding-left: 12px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    
+    /* 文本框：默认加大 */
+    #stTextInput {
+      width: 100%;
+      min-height: 220px;
+      box-sizing: border-box;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      resize: vertical;
+      margin-bottom: 12px;
+    }
+    
+    /* 按钮 */
+    .btn-group button {
+      padding: 7px 16px;
+      margin-right: 8px;
+      border: 1px solid #888;
+      background: #f5f5f5;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-group button:hover { background: #e0e0e0; }
+    
+    /* 统计行 */
+    .st-stat-line {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    .st-han-stat {
+      color: #c0392b;
+      font-weight: bold;
+      font-size: 17px;
+    }
+    
+    /* 表格容器与样式（标准表头） */
+    .table-wrapper {
+      margin-top: 15px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+    }
+    #stResultTable {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    #stResultTable thead tr {
+      background: #0055aa;
+      color: #fff;
+    }
+    #stResultTable th {
+      padding: 12px 10px;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 1px;
+      border-right: 1px solid rgba(255,255,255,0.2);
+    }
+    #stResultTable th:last-child { border-right: none; }
+    #stResultTable td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      border-right: 1px solid #eee;
+      vertical-align: top;
+    }
+    #stResultTable td:last-child { border-right: none; }
+    #stResultTable tbody tr:hover { background: #f0f7ff; }
+    .divider-row td {
+      background: #fafafa;
+      color: #666;
+      font-style: italic;
+      text-align: center !important;
+      border-top: 2px dashed #ccc;
+      border-bottom: 2px dashed #ccc;
+    }
+    .char-space { color: #999; font-size: 13px; }
+
