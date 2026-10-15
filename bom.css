@@ -1,0 +1,103 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", sans-serif; background: #f0f2f5; font-size: 13px; }
+
+.container { max-width: 1600px; margin: 0 auto; padding: 12px; }
+
+.top-bar {
+  background: #fff; padding: 12px 16px; border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.top-bar h1 { font-size: 18px; color: #1a1a1a; }
+.top-bar input[type=file] { display: none; background-color: #52c41a;}
+.top-bar button {
+  padding: 6px 14px; border: 1px solid #d9d9d9; border-radius: 4px;
+  background: #f0651f; color: #fff; cursor: pointer; font-size: 13px;
+}
+.top-bar button#backtooa {
+  padding: 6px 14px; border: 1px solid #d9d9d9; border-radius: 4px;
+  background: #292cf1; color: #fff; cursor: pointer; font-size: 13px;
+}
+.top-bar button:hover { background: #d164a5; }
+.top-bar .hint { color: #888686; font-size: 12px; background-color: #dbdbdc;}
+
+.summary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff; padding: 10px 16px; border-radius: 6px; margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.filters {
+  background: #fff; padding: 10px 16px; border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px;
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.filters input, .filters select {
+  padding: 5px 10px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 13px;
+}
+.filters button {
+  padding: 5px 12px; border: 1px solid #d9d9d9; border-radius: 4px;
+  background: #fff; cursor: pointer; font-size: 13px;
+}
+.filters button:hover { border-color: #1677ff; color: #1677ff; }
+
+.table-wrap {
+  background: #f4eeee; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: auto; max-height: 70vh;
+}
+table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+thead { position: sticky; top: 0; z-index: 10; }
+th {
+  background: #aea744; padding: 8px 10px; text-align: left;
+  border-bottom: 2px solid #f31111; border-top: 2px solid #eccd07;font-weight: 600; color: #555; font-size: 12px;
+}
+td {
+  padding: 6px 10px; border-bottom: 1px solid #e78515; font-size: 12px;
+}
+tr:hover td { background: #f5f8ff; }
+
+.pagination {
+  margin-top: 10px;  font-size: 13px; color: #666;
+}
+.pagination button {
+  border: 1px solid #f4d6d6;
+  border-radius: 4px; background: #f1f1f1; cursor: pointer; font-size: 12px;
+}
+.pagination button:hover:not(:disabled) { border-color: #1677ff; color: #1677ff; }
+.pagination button:disabled { color: #e8abab; cursor: not-allowed; }
+
+.child-code { color: #1677ff; cursor: pointer; text-decoration: underline dotted; }
+.child-code:hover { color: #0958d9; }
+
+.l0 { color: #c41d7f; font-weight: 600; }
+.l1 { color: #1677ff; font-weight: 600; }
+.l2 { color: #52c41a; font-weight: 600; }
+.l3 { color: #fa8c16; font-weight: 600; }
+.l4 { color: #722ed1; font-weight: 600; }
+
+/* 分页容器：强制自身垂直居中 + 内部元素居中 */
+.pagination {
+  display: flex;
+  align-items: center;      /* 垂直居中核心 */
+  justify-content: center;  /* 内部文字水平居中 */
+  gap: 6px;                 /* 替代原来的 margin，间距更均匀 */
+  margin: 0;                /* 清除原 margin-top: 10px */
+  height: 100%;             /* 撑满搜索行高度，确保居中基准一致 */
+  white-space: nowrap;      /* 防止文字换行 */
+}
+
+/* 按钮对齐修正 */
+.pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;             /* 与搜索框/下拉框高度对齐（如 32px） */
+  margin: 0;
+  /* 保留你原有的 padding/border 等 */
+}
+
+/* 中间文字强制垂直居中 */
+.pagination span, 
+.pagination {
+  line-height: 1;           /* 消除文字自带行高偏差 */
+}

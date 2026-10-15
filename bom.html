@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>BOM 展开查看器</title>
+<!-- 绑定 CSS -->
+  <link rel="stylesheet" href="bom.css" />
+</head>
+<body>
+<div class="container">
+  <div class="top-bar">
+    <h1>BOM 展开查看器</h1>
+    <input type="file" id="fileInput" accept=".csv">
+    <button onclick="document.getElementById('fileInput').click()">选择 CSV 文件</button>
+    <span class="hint">将 CSV 放入 bomdata/ 文件夹可自动加载</span>
+    <button id="backtooa" style="margin-left: auto;">返回办公系统</button>
+  </div>
+
+  <div class="summary" id="summary">等待导入数据...</div>
+   
+
+
+
+  <div class="filters">
+    <input type="text" id="searchInput" placeholder="搜索编码/名称..." style="width:200px">
+    <select id="levelFilter"><option value="all">全部层级</option></select>
+    <select id="propertyFilter"><option value="all">全部属性</option></select>
+    <button id="btnReset">重置</button>
+    <button id="btnDrill" disabled>返回上级</button>
+    <div class="pagination top-pagination" id="pagination" style="margin-left: auto;">  </div>
+  </div>
+
+  <div class="table-wrap">
+    <table id="bomTable">
+      <thead>
+        <tr>
+          <th>序号</th>
+          
+          <th>Level_no</th>
+          <th>展开项次</th>
+          <th>子项物料编码</th>
+          <th>子项物料名称</th>
+          <th>子项规格型号</th>
+          <th>子项单位</th>
+          <th>用量_分子</th>
+          <th>用量_分母</th>
+          <th>子项物料属性</th>
+       </tr>
+      </thead>
+      <tbody id="bomBody">
+        <tr><td colspan="14" style="text-align:center;color:#270fda;padding:40px;">请选择 CSV 文件导入</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+</div>
+
+ <script src="./bom.js"></script>
+</body>
+</html>

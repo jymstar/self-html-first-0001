@@ -47,12 +47,12 @@ nav a:hover {
   }
 
     /* 工具区容器 */
-    .tool-box {
+    .static-tool {
       max-width: 800px;
       margin: 30px auto;
       padding: 0 20px;
     }
-    .tool-box h2 {
+    .static-tool h2 {
       border-left: 5px solid #0055aa;
       padding-left: 12px;
       color: #2c3e50;
@@ -62,7 +62,7 @@ nav a:hover {
     /* 文本框：默认加大 */
     #stTextInput {
       width: 100%;
-      min-height: 220px;
+      min-height: 120px;
       box-sizing: border-box;
       padding: 12px;
       font-size: 16px;
@@ -72,16 +72,19 @@ nav a:hover {
       margin-bottom: 12px;
     }
     
+    .hello1 { width: 100%;background: #f1b3b3;}
+    .hello2 { width: 100%;background: #47b783;}
+
     /* 按钮 */
     .btn-group button {
       padding: 7px 16px;
       margin-right: 8px;
       border: 1px solid #888;
-      background: #f5f5f5;
+      background: #55f084;
       cursor: pointer;
       font-size: 14px;
     }
-    .btn-group button:hover { background: #e0e0e0; }
+    .btn-group button:hover { background: #d47878; }
     
     /* 统计行 */
     .st-stat-line {

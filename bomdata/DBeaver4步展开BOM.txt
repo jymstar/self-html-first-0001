@@ -1,0 +1,156 @@
+1、清表
+DROP TABLE IF EXISTS `bom_demo`.`bom展开20260930`;
+
+
+2、建表
+
+CREATE TABLE `bom_demo`.`bom展开20260930` (
+    `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `BOMid` VARCHAR(100),
+    `父项物料编码` VARCHAR(100),
+    `父项物料名称` VARCHAR(200),
+    `Level_no` INT,
+    `展开项次` VARCHAR(500),
+    `项次` INT,
+    `子项物料编码` VARCHAR(100),
+    `子项物料名称` VARCHAR(200),
+    `子项规格型号` VARCHAR(1000),
+    `子项单位` VARCHAR(50),
+    `用量_分子` DECIMAL(18,6),
+    `用量_分母` DECIMAL(18,6),
+    `子项物料属性`VARCHAR(200),
+    `path` VARCHAR(1000),
+    `创建时间` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_level (`Level_no`),
+    INDEX idx_子项编码 (`子项物料编码`),
+    INDEX idx_父项编码 (`父项物料编码`),
+    INDEX idx_path (`path`(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+
+3、插表
+INSERT INTO `bom_demo`.`bom展开20260930`
+(
+    `BOMid`,
+    `父项物料编码`,
+    `父项物料名称`,
+    `Level_no`,
+    `项次`,
+    `展开项次`,
+    `子项物料编码`,
+    `子项物料名称`,
+    `子项规格型号`,
+    `子项单位`,
+    `用量_分子`,
+    `用量_分母`,
+    `子项物料属性`,
+    `path`
+)
+WITH RECURSIVE
+bom_latest AS (
+    SELECT
+        `父项物料编码`,
+        `BOM版本`
+    FROM (
+        SELECT
+            `父项物料编码`,
+            `BOM版本`,
+            ROW_NUMBER() OVER (
+                PARTITION BY `父项物料编码`
+                ORDER BY CAST(SUBSTRING_INDEX(`BOM版本`, '_V', -1) AS DECIMAL(10,4)) DESC
+            ) AS rn
+        FROM `bom_demo`.`清洗数据_物料清单_测试_new3`
+        WHERE `数据状态` = '已审核'
+    ) x
+    WHERE rn = 1
+),
+
+bom_tree AS (
+    -- 锚点：顶层父项
+    SELECT
+        0 AS Level_no,
+        CAST(NULLIF(TRIM(`项次`), '') AS UNSIGNED) AS `项次`,
+        CAST(LPAD(NULLIF(TRIM(`项次`), ''), 2, '0') AS CHAR(255)) AS `展开项次`,
+        `BOMid`,
+        `父项物料编码`,
+        `物料名称` AS `父项物料名称`,
+        CAST(TRIM(`父项物料编码`) AS CHAR(100)) AS 当前物料编码,
+        CAST(`物料名称` AS CHAR(200)) AS 当前物料名称,
+        CAST(NULL AS CHAR(100)) AS 子项物料编码,
+        CAST(NULL AS CHAR(200)) AS 子项物料名称,
+        CAST(NULL AS CHAR(1000)) AS `子项规格型号`,
+        CAST(NULL AS CHAR(50)) AS `子项单位`,
+        CAST(NULL AS DECIMAL(18,6)) AS `用量_分子`,
+        CAST(NULL AS DECIMAL(18,6)) AS `用量_分母`,
+        CAST(NULL AS CHAR(200)) AS `子项物料属性`,
+        CAST('0' AS CHAR(1000)) AS `path`,
+        CAST(TRIM(`父项物料编码`) AS CHAR(2000)) AS cycle_key
+    FROM `bom_demo`.`清洗数据_物料清单_测试_new3`
+    WHERE `BOM版本` = 'C.9801.G.26.0321_V1.0'
+      AND TRIM(`项次`) = '1'
+      AND `数据状态` = '已审核'
+
+    UNION ALL
+
+    -- 递归：逐层展开子项
+    SELECT
+        b.Level_no + 1,
+        CAST(NULLIF(TRIM(t.`项次`), '') AS UNSIGNED),
+        CAST(CONCAT(b.`展开项次`, '_', LPAD(NULLIF(TRIM(t.`项次`), ''), 2, '0')) AS CHAR(255)),
+        t.`BOMid`,
+        t.`父项物料编码`,
+        b.当前物料名称 AS `父项物料名称`,
+        CAST(TRIM(t.`子项物料编码`) AS CHAR(100)),
+        CAST(t.`子项物料名称` AS CHAR(200)),
+        CAST(TRIM(t.`子项物料编码`) AS CHAR(100)),
+        CAST(t.`子项物料名称` AS CHAR(200)),
+        CAST(NULL AS CHAR(1000)) AS `子项规格型号`,
+        CAST(t.`子项单位` AS CHAR(50)),
+        CAST(NULLIF(REPLACE(TRIM(t.`用量_分子`), ',', ''), '') AS DECIMAL(18,6)),
+        CAST(NULLIF(REPLACE(TRIM(t.`用量_分母`), ',', ''), '') AS DECIMAL(18,6)),
+        CAST(NULL AS CHAR(200)) AS `子项物料属性`,
+        CAST(CONCAT(b.path, ' -> ', TRIM(t.`子项物料编码`)) AS CHAR(1000)),
+        CAST(CONCAT(b.cycle_key, '|', TRIM(t.`子项物料编码`)) AS CHAR(2000))
+    FROM `bom_demo`.`清洗数据_物料清单_测试_new3` t
+    JOIN bom_tree b
+        ON TRIM(t.`父项物料编码`) = TRIM(b.当前物料编码)
+    JOIN bom_latest l
+        ON TRIM(t.`父项物料编码`) = l.`父项物料编码`
+       AND TRIM(t.`BOM版本`) = l.`BOM版本`
+    WHERE b.Level_no < 10
+      AND b.cycle_key NOT LIKE CONCAT('%|', TRIM(t.`子项物料编码`), '%')
+      AND TRIM(t.`子项物料编码`) <> ''
+      AND t.`数据状态` = '已审核'
+)
+
+SELECT
+    `BOMid`,
+    `父项物料编码`,
+    `父项物料名称`,
+    Level_no,
+    `项次`,
+    `展开项次`,
+    `子项物料编码`,
+    `子项物料名称`,
+    `子项规格型号`,
+    `子项单位`,
+    `用量_分子`,
+    `用量_分母`,
+    `子项物料属性`,
+    `path`
+FROM bom_tree
+WHERE `子项物料编码` IS NOT NULL
+ORDER BY
+    Level_no,
+    `展开项次`,
+    `父项物料编码`,
+    `子项物料编码`;
+
+4、连表
+UPDATE `bom_demo`.`bom展开20260930` S
+JOIN `bom_demo`.`物料主数据` A
+    ON S.`子项物料编码` = A.`物料编码`
+SET S.`子项物料属性` = A.`物料属性`,
+    S.`子项规格型号` = A.`规格型号`;
