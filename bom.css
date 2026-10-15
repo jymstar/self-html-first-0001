@@ -12,11 +12,11 @@ body { font-family: "Microsoft YaHei", sans-serif; background: #f0f2f5; font-siz
 .top-bar input[type=file] { display: none; background-color: #52c41a;}
 .top-bar button {
   padding: 6px 14px; border: 1px solid #d9d9d9; border-radius: 4px;
-  background: #f0651f; color: #fff; cursor: pointer; font-size: 13px;
+  background: #3413ef; color: #fff; cursor: pointer; font-size: 13px;
 }
 .top-bar button#backtooa {
   padding: 6px 14px; border: 1px solid #d9d9d9; border-radius: 4px;
-  background: #292cf1; color: #fff; cursor: pointer; font-size: 13px;
+  background: #f11606; color: #fff; cursor: pointer; font-size: 13px;
 }
 .top-bar button:hover { background: #d164a5; }
 .top-bar .hint { color: #888686; font-size: 12px; background-color: #dbdbdc;}

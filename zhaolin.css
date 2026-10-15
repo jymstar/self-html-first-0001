@@ -248,14 +248,14 @@ header img {
 
 .life-poem {
   margin: 10;
-  background: #8e8ee9;
+  background: #cfcfef;
   border-radius: 4%;
   text-align: center;
 
 }
 .life-poem p {
   margin: 0;
-  padding: 2px;
+  padding: 12px;
   font-size: 18px;
   color: #6c5959;
 }
