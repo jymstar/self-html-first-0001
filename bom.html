@@ -2,17 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>BOM 展开查看器</title>
+<title>心就是梯-是登天的梯</title>
 <!-- 绑定 CSS -->
   <link rel="stylesheet" href="bom.css" />
 </head>
 <body>
 <div class="container">
   <div class="top-bar">
-    <h1>BOM 展开查看器</h1>
+    <h1>BOM查看</h1>
     <input type="file" id="fileInput" accept=".csv">
     <button onclick="document.getElementById('fileInput').click()">选择 CSV 文件</button>
     <span class="hint">将 CSV 放入 bomdata/ 文件夹可自动加载</span>
+    <button id="create_new_material_code" style="margin-left: auto;">创建新物料编码</button>
     <button id="backtooa" style="margin-left: auto;">返回办公系统</button>
   </div>
 

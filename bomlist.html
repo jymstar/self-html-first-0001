@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>物料清单主数据</title>
+<link rel="stylesheet" href="bomlist.css" />
+</head>
+<body>
+
+<div class="top">
+  <div class="title">📋 物料清单主数据</div>
+  <input type="file" id="fileInput" accept=".csv">
+  <span id="importTip">已导入 0 条</span>
+  <span style="margin-left:auto;color:#27ae60;" id="saveTip"></span>
+  <button class="btn btn-orange" onclick="openEdit('edit')">修改</button>
+  <button class="btn btn-green" onclick="openEdit('copy')">复制新建</button>
+  <button class="btn btn-red" onclick="doDelete()">删除</button>
+  <button class="btn btn-gray" onclick="history.back()">返回物料查看</button>
+</div>
+
+<div class="search-row">
+  <input id="s_mohu" placeholder="模糊搜索" oninput="debounceSearch()">
+  <input id="s_bomid" placeholder="BOMid" oninput="debounceSearch()">
+  <input id="s_item" placeholder="项次" oninput="debounceSearch()">
+  <input id="s_version" placeholder="BOM版本" oninput="debounceSearch()">
+  <input id="s_parentcode" placeholder="父项物料编码" oninput="debounceSearch()">
+  <input id="s_parentname" placeholder="物料名称" oninput="debounceSearch()">
+  <select id="s_status"><option value="">全部状态</option><option>已审核</option><option>重新审核</option></select>
+  <input id="s_childcode" placeholder="子项物料编码" oninput="debounceSearch()">
+  <input id="s_childname" placeholder="子项物料名称" oninput="debounceSearch()">
+  <input id="s_childunit" placeholder="子项单位" oninput="debounceSearch()">
+  <button class="btn btn-blue" onclick="doSearch()">实时搜索</button>
+  <button class="btn btn-gray" onclick="resetSearch()">重置</button>
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40px;">选</th>
+        <th style="width:100px;">BOMid</th>
+        <th style="width:60px;">项次</th>
+        <th style="width:140px;">BOM版本</th>
+        <th style="width:120px;">父项物料编码</th>
+        <th style="width:140px;">物料名称</th>
+        <th style="width:90px;">数据状态</th>
+        <th style="width:120px;">子项物料编码</th>
+        <th style="width:160px;">子项物料名称</th>
+        <th style="width:80px;">子项单位</th>
+        <th style="width:80px;">用量_分子</th>
+        <th style="width:80px;">用量_分母</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div id="pagination"></div>
+
+<div id="modal">
+  <div class="box">
+    <h3 id="modalTitle">修改BOM</h3>
+    <form id="editForm">
+      <input type="hidden" id="f_mode"><input type="hidden" id="f_id">
+      <div class="form-row"><label>BOMid</label><input id="f_bomid"><span class="tip" id="codeTip"></span></div>
+      <div class="form-row"><label>项次</label><input id="f_item"></div>
+      <div class="form-row"><label>BOM版本</label><input id="f_version"></div>
+      <div class="form-row"><label>父项编码</label><input id="f_parentcode"></div>
+      <div class="form-row"><label>物料名称</label><input id="f_parentname"></div>
+      <div class="form-row"><label>数据状态</label><input id="f_status"></div>
+      <div class="form-row"><label>子项编码</label><input id="f_childcode"></div>
+      <div class="form-row"><label>子项名称</label><input id="f_childname"></div>
+      <div class="form-row"><label>子项单位</label><input id="f_childunit"></div>
+      <div class="form-row"><label>用量_分子</label><input id="f_numerator"></div>
+      <div class="form-row"><label>用量_分母</label><input id="f_denominator"></div>
+      <div style="text-align:right;">
+        <button type="button" class="btn btn-gray" onclick="closeModal()">取消</button>
+        <button type="submit" class="btn btn-blue">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="./bomlist.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+  body{margin:0;font-family:微软雅黑;background:#f5f5f5;color:#333;}
+  .top{background:#fff;padding:10px 15px;border-bottom:1px solid #ddd;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .title{font-size:20px;font-weight:bold;}
+  .search-row{margin:10px 15px;background:#fff;padding:10px;border-radius:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  .search-row input,.search-row select{padding:5px 8px;border:1px solid #ccc;border-radius:4px;max-width: 150px;}
+  .btn{padding:5px 12px;border:0;border-radius:4px;cursor:pointer;color:#fff;}
+  .btn-blue{background:#2f80ed;} .btn-gray{background:#888;} .btn-orange{background:#f2994a;} .btn-green{background:#27ae60;} .btn-red{background:#eb5757;}
+  .table-container{margin:0 15px;background:#fff;border-radius:6px;overflow:auto;max-height:70vh;}
+  table{border-collapse:collapse;width:100%;font-size:13px;}
+  th,td{border:1px solid #eee;padding:6px 8px;white-space:nowrap;}
+  th{background:#ed7f7f;position:sticky;top:0;z-index:1;}
+  .col-spec{width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  tr.sel{background:#e8f4fd;}
+  #pagination{text-align:center;padding:10px;background:#fff;margin:0 15px 15px;}
+ 
+  #modal{
+    display:none;position:fixed;left:0;top:0;width:100%;z-index: 1000; /* 弹窗遮罩层 */
+    height:100%;background:rgba(241, 226, 226, 0.4);max-height: 90vh; /* 最高占屏幕90% */
+  overflow-y: auto; /* 内部内容溢出时出现滚动条 */
+  padding-bottom: 20px; /* 底部留点呼吸空间 */
+}
+  #modal .box{background:#e8bcbc;width:520px;margin:80px auto;padding:20px;border-radius:6px;max-height:60vh;overflow:auto;}
+  .modal-content {
+  z-index: 1001; /* 弹窗内容（若有此类名） */
+}
+  .form-row{display:flex;gap:10px;margin-bottom:10px;}
+  .form-row label{width:80px;text-align:right;}
+  .form-row input,.form-row select,.form-row textarea{flex:1;padding:5px;}
+  .tip{color:#888;font-size:12px;}
+  table th.spec-col, table td.spec-col {
+  width: 180px; max-width: 280px;
+  white-space: normal; word-break: break-all;
+}
+
+td, th {
+ white-space: normal;      /* 允许换行（原可能是 nowrap） */
+ word-break: break-all;    /* 长串无空格也强制断行 break-all*/
+ max-width: 330px;        /* 限制最大宽度，按需调 */
+}
+
+
+/* 物料名称（第2列）：强制不换行，保持窄宽 */
+table th:nth-child(2), table td:nth-child(2) {
+  white-space: nowrap;
+  width: 80px;
+}
+
+/* 规格型号（第4列，保留你原有的红框+末段逻辑，仅提权兜底） */
+table th:nth-child(4), table td:nth-child(4) {
+  width: 150px;
+  max-width: 180px;
+  white-space: normal !important;
+  word-break: break-all;
+}

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>物料主数据</title>
+<style>
+  body { font-family: "Microsoft YaHei", sans-serif; margin: 10px; background: #f5f5f5; }
+  .top-bar { background: #fff; padding: 10px; border-radius: 6px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;}
+  .title { font-size: 22px; font-weight: bold; margin-right: 20px; }
+  .search-area { display: flex; gap: 5px; align-items: center; }
+  input, select { padding: 5px; border: 1px solid #ccc; border-radius: 4px; }
+  button { padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; }
+  .btn-blue { background: #1890ff; color: #fff; }
+  .btn-gray { background: #999; color: #fff; }
+  .btn-orange { background: #faad14; color: #fff; }
+  .btn-green { background: #52c41a; color: #fff; }
+  .btn-red { background: #f5222d; color: #fff; }
+  
+  .table-container { background: #fff; border-radius: 6px; overflow: auto; max-height: 75vh; }
+  table { border-collapse: collapse; table-layout: fixed; width: 100%; min-width: 1600px; font-size: 13px;}
+  /* 严格固定列宽，防止规格型号撑破 */
+  th, td { border: 1px solid #e8e8e8; padding: 6px 4px; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; vertical-align: middle;}
+  th { background: #fafafa; font-weight: bold; }
+  /* 列宽分配 */
+  .col-sel { width: 40px; } .col-code { width: 90px; } .col-name { width: 120px; }
+  .col-spec { width: 320px; } /* 规格型号限制宽度，溢出省略 */
+  .col-draw { width: 80px; } .col-color { width: 70px; } .col-pic { width: 50px; }
+  .col-status { width: 70px; } .col-disable { width: 50px; } .col-date { width: 85px; }
+  .col-attr { width: 60px; } .col-unit { width: 50px; } .col-buy { width: 60px; }
+  .col-out { width: 60px; } .col-ware { width: 80px; }
+  
+  .modal-mask { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; }
+  .modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border-radius: 6px; width: 600px; }
+  .modal h3 { margin-top: 0; }
+  .form-row { display: flex; margin-bottom: 10px; }
+  .form-row label { width: 80px; text-align: right; margin-right: 10px; line-height: 30px;}
+  .form-row input, .form-row select { flex: 1; }
+  .save-tip { color: #52c41a; font-size: 12px; margin-left: auto; }
+  /* 规格型号（第4列，保留你原有的红框+末段逻辑，仅提权兜底） */
+table th:nth-child(4), table td:nth-child(4) {
+  width: 350px;
+  max-width: 400px;
+  white-space: normal !important;
+  word-break: break-all;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <button class="btn-gray">返回办公系统</button>
+  <span class="title">📦 物料主数据</span>
+  <input type="file" id="fileInput" accept=".csv">
+  <span id="importHint">已导入 0 条</span>
+  <span class="save-tip" id="saveTip">已实时保存</span>
+  
+  <div class="search-area" style="margin-left:20px;">
+    <input id="s_code" placeholder="物料编码" oninput="doSearch()">
+    <input id="s_name" placeholder="物料名称" oninput="doSearch()">
+    <input id="s_spec" placeholder="规格型号" oninput="doSearch()">
+    <input id="s_draw" placeholder="图纸代号" oninput="doSearch()">
+    <select id="s_attr" onchange="doSearch()">
+      <option value="">全部属性</option><option>自制</option><option>外购</option>
+    </select>
+    <select id="s_status" onchange="doSearch()">
+      <option value="">全部状态</option><option>已审核</option><option>重新审核</option>
+    </select>
+    <button class="btn-blue" onclick="doSearch()">实时搜索</button>
+    <button class="btn-gray" onclick="resetSearch()">重置</button>
+    <button class="btn-orange" onclick="openEdit('edit')">修改</button>
+    <button class="btn-green" onclick="openEdit('copy')">复制</button>
+    <button class="btn-red" onclick="doDelete()">删除</button>
+  </div>
+</div>
+
+<div class="table-container">
+  <table id="mainTable">
+    <thead>
+      <tr>
+        <th class="col-sel">选</th>
+        <th class="col-code">物料编码</th>
+        <th class="col-name">物料名称</th>
+        <th class="col-spec">规格型号</th>
+        <th class="col-draw">图纸代号</th>
+        <th class="col-color">颜色色号</th>
+        <th class="col-pic">图片</th>
+        <th class="col-status">数据状态</th>
+        <th class="col-disable">禁用</th>
+        <th class="col-date">创建日期</th>
+        <th class="col-date">修改日期</th>
+        <th class="col-attr">物料属性</th>
+        <th class="col-unit">基本单位</th>
+        <th class="col-buy">允许采购</th>
+        <th class="col-out">允许委外</th>
+        <th class="col-ware">仓库</th>
+      </tr>
+    </thead>
+    <tbody id="tb"></tbody>
+  </table>
+</div>
+<div id="countTip"></div>
+
+<!-- 弹窗 -->
+<div class="modal-mask" id="modal">
+  <div class="modal">
+    <h3 id="modalTitle">修改物料</h3>
+    <form id="editForm">
+      <input type="hidden" id="f_mode"><input type="hidden" id="f_id">
+      <div class="form-row"><label>编码</label><input id="f_code" required><span id="codeTip" style="font-size:12px;color:#999;"></span></div>
+      <div class="form-row"><label>名称</label><input id="f_name"></div>
+      <div class="form-row"><label>规格</label><input id="f_spec"></div>
+      <div class="form-row"><label>图纸</label><input id="f_drawing"></div>
+      <div class="form-row"><label>颜色</label><input id="f_color"></div>
+      <div class="form-row"><label>单位</label><input id="f_unit" value="Pcs"></div>
+      <div class="form-row"><label>属性</label><select id="f_attr"><option>自制</option><option>外购</option></select></div>
+      <div class="form-row"><label>仓库</label><input id="f_warehouse"></div>
+      <div style="text-align:right;margin-top:15px;">
+        <button type="button" class="btn-gray" onclick="closeModal()">取消</button>
+        <button type="submit" class="btn-blue">提交审核</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+let all = JSON.parse(localStorage.getItem('material_all_v2')||'[]');
+let selectedId = null;
+
+// 智能解码(UTF-8/GBK)
+async function decodeCSV(buf){
+  const u8 = new Uint8Array(buf);
+  if(u8[0]==0xEF&&u8[1]==0xBB&&u8[2]==0xBF) return new TextDecoder('utf-8').decode(u8.slice(3));
+  try{ return new TextDecoder('utf-8').decode(buf); }catch(e){}
+  // 简易GBK回退(实际环境可用TextDecoder('gbk'))
+  return new TextDecoder('gbk',{fatal:false}).decode(buf);
+}
+
+// 严谨CSV解析(处理引号内逗号)
+function parseCSV(text){
+  const rows=[]; let cur='', row=[], q=false;
+  for(let i=0;i<text.length;i++){
+    let c=text[i];
+    if(c=='"'){ q=!q; cur+=c; }
+    else if(c==','&&!q){ row.push(cur); cur=''; }
+    else if((c=='\n'||c=='\r')&&!q){
+      if(cur||row.length){ row.push(cur); rows.push(row); row=[]; cur=''; }
+    } else cur+=c;
+  }
+  if(cur||row.length){ row.push(cur); rows.push(row); }
+  return rows.map(r=>r.map(c=>c.replace(/^"|"$/g,'').replace(/""/g,'"').trim())).filter(r=>r.length>5);
+}
+
+// 导入映射(严格16列)
+function importText(text){
+  const rows = parseCSV(text);
+  let cnt=0;
+  rows.slice(1).forEach(r=>{ // 跳过表头
+    if(r.length<10) return;
+    const obj={
+      _id: 'm_'+Date.now()+'_'+Math.random().toString(36).substr(2,5),
+      code: r[0], name: r[1], spec: r[2], drawing: r[3]||'', color: r[4]||'',
+      pic: r[5]||'', status: r[6]||'重新审核', disabled: r[7]||'否',
+      cdate: r[8]||'', mdate: r[9]||'', attr: r[10]||'自制', unit: r[11]||'Pcs',
+      allowBuy: r[12]||'否', allowOut: r[13]||'否', warehouse: r[14]||'', remark: r[15]||''
+    };
+    const idx = all.findIndex(m=>m.code===obj.code);
+    if(idx>-1) all[idx]={...all[idx],...obj,_id:all[idx]._id}; else all.push(obj);
+    cnt++;
+  });
+  saveRealTime(); doSearch();
+  document.getElementById('importHint').textContent = `已导入 ${cnt} 条`;
+}
+
+function saveRealTime(){
+  localStorage.setItem('material_all_v2', JSON.stringify(all));
+  document.getElementById('saveTip').textContent = '已实时保存 ('+(new Date().toLocaleTimeString())+')';
+}
+
+function doSearch(){
+  const sc=document.getElementById('s_code').value.trim();
+  const sn=document.getElementById('s_name').value.trim();
+  const ss=document.getElementById('s_spec').value.trim();
+  const sd=document.getElementById('s_draw').value.trim();
+  const sa=document.getElementById('s_attr').value;
+  const st=document.getElementById('s_status').value;
+  const filtered = all.filter(m=>
+    (!sc||m.code.includes(sc))&&(!sn||m.name.includes(sn))&&
+    (!ss||m.spec.includes(ss))&&(!sd||m.drawing.includes(sd))&&
+    (!sa||m.attr===sa)&&(!st||m.status===st)
+  );
+  render(filtered);
+}
+function resetSearch(){
+  ['s_code','s_name','s_spec','s_draw','s_attr','s_status'].forEach(id=>document.getElementById(id).value='');
+  doSearch();
+}
+
+function render(list){
+  document.getElementById('countTip').textContent = `共 ${all.length} 条物料 | 当前显示 ${list.length} 条`;
+  const tb=document.getElementById('tb');
+  tb.innerHTML = list.map(m=>`
+    <tr style="${selectedId===m._id?'background:#e6f7ff;':''}">
+      <td class="col-sel"><input type="radio" name="sel" ${selectedId===m._id?'checked':''} onclick="selectedId='${m._id}';doSearch()"></td>
+      <td class="col-code" title="${m.code}">${m.code}</td>
+      <td class="col-name" title="${m.name}">${m.name}</td>
+      <td class="col-spec" title="${m.spec}">${m.spec}</td>
+      <td class="col-draw">${m.drawing}</td>
+      <td class="col-color">${m.color}</td>
+      <td class="col-pic">${m.pic}</td>
+      <td class="col-status">${m.status}</td>
+      <td class="col-disable">${m.disabled}</td>
+      <td class="col-date">${m.cdate}</td>
+      <td class="col-date">${m.mdate}</td>
+      <td class="col-attr">${m.attr}</td>
+      <td class="col-unit">${m.unit}</td>
+      <td class="col-buy">${m.allowBuy}</td>
+      <td class="col-out">${m.allowOut}</td>
+      <td class="col-ware">${m.warehouse}</td>
+    </tr>`).join('');
+}
+
+// 弹窗
+function getSelected(){ return all.find(x=>x._id===selectedId); }
+function openEdit(mode){
+  const cur=getSelected(); if(!cur&&mode!=='copy') return alert('请先选中一条');
+  const isCopy=mode==='copy';
+  document.getElementById('modalTitle').textContent = isCopy?'复制物料':'修改物料';
+  document.getElementById('f_mode').value=mode; document.getElementById('f_id').value=cur?._id||'';
+  const ci=document.getElementById('f_code');
+  ci.value = isCopy?(cur?.code+'_COPY'||''):(cur?.code||'');
+  ci.readOnly=!isCopy; document.getElementById('codeTip').textContent = isCopy?'(可改)':'(不可改)';
+  document.getElementById('f_name').value=cur?.name||'';
+  document.getElementById('f_spec').value=cur?.spec||'';
+  document.getElementById('f_drawing').value=cur?.drawing||'';
+  document.getElementById('f_color').value=cur?.color||'';
+  document.getElementById('f_unit').value=cur?.unit||'Pcs';
+  document.getElementById('f_attr').value=cur?.attr||'自制';
+  document.getElementById('f_warehouse').value=cur?.warehouse||'';
+  document.getElementById('modal').style.display='block';
+}
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+
+document.getElementById('editForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const mode=document.getElementById('f_mode').value;
+  const code=document.getElementById('f_code').value.trim();
+  if(mode==='copy'&&all.some(m=>m.code===code)) return alert('编码已存在');
+  const now=new Date().toLocaleDateString();
+  const data={
+    _id: mode==='copy'?'m_'+Date.now():document.getElementById('f_id').value,
+    code, name:document.getElementById('f_name').value.trim(), spec:document.getElementById('f_spec').value.trim(),
+    drawing:document.getElementById('f_drawing').value.trim(), color:document.getElementById('f_color').value.trim(),
+    unit:document.getElementById('f_unit').value, attr:document.getElementById('f_attr').value,
+    warehouse:document.getElementById('f_warehouse').value.trim(),
+    status:'重新审核', cdate:mode==='copy'?now:(getSelected()?.cdate||now), mdate:now,
+    pic:'', disabled:'否', allowBuy:'否', allowOut:'否', remark:''
+  };
+  if(mode==='copy') all.push(data); else{ const idx=all.findIndex(m=>m._id===data._id); if(idx>-1) all[idx]=data; }
+  saveRealTime(); doSearch(); closeModal();
+  alert(mode==='copy'?'复制已存入':'修改已提交');
+});
+function doDelete(){
+  if(!selectedId) return alert('请先选中');
+  if(!confirm('确定删除？')) return;
+  all=all.filter(m=>m._id!==selectedId); selectedId=null; saveRealTime(); doSearch();
+}
+
+// 文件导入
+document.getElementById('fileInput').addEventListener('change',async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const buf=await f.arrayBuffer(); const txt=await decodeCSV(buf); importText(txt);
+});
+
+// 初始自动加载(同目录 bomdata/...)
+if(all.length===0){
+  fetch('bomdata/_物料主数据__20261016.csv').then(r=>r.arrayBuffer()).then(async buf=>{
+    const txt=await decodeCSV(buf); importText(txt);
+  }).catch(()=>{});
+}
+doSearch();
+</script>
+</body>
+</html>

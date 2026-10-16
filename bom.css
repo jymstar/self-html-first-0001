@@ -33,16 +33,16 @@ body { font-family: "Microsoft YaHei", sans-serif; background: #f0f2f5; font-siz
   display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
 }
 .filters input, .filters select {
-  padding: 5px 10px; border: 1px solid #d9d9d9; border-radius: 4px; font-size: 13px;
+  padding: 5px 10px; border: 1px solid #e84040; border-radius: 4px; font-size: 13px;
 }
 .filters button {
   padding: 5px 12px; border: 1px solid #d9d9d9; border-radius: 4px;
-  background: #fff; cursor: pointer; font-size: 13px;
+  background: #b2d2aa; cursor: pointer; font-size: 13px;
 }
 .filters button:hover { border-color: #1677ff; color: #1677ff; }
 
 .table-wrap {
-  background: #f4eeee; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  background: #e7dddd; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   overflow: auto; max-height: 70vh;
 }
 table { width: 100%; border-collapse: collapse; white-space: nowrap; }

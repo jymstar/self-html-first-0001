@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>物料主数据</title>
+
+<link rel="stylesheet" href="material.css" />
+</head>
+<body>
+
+<div class="top">
+  
+  <div class="title">📦 物料主数据</div>
+  <input type="file" id="fileInput" accept=".csv">
+  <span id="importTip">已导入 0 条</span>
+  <span style="margin-left:auto;color:#27ae60;" id="saveTip"></span>
+   <button class="btn btn-orange" onclick="openEdit('edit')">修改</button>
+  <button class="btn btn-green" onclick="openEdit('copy')">复制新建</button>
+  <button class="btn btn-red" onclick="doDelete()">删除</button>
+  <button id="btn_btn_gray" onclick="history.back()">返回BOM查看</button>
+</div>
+
+<div class="search-row">
+  <input id="s_mohu" placeholder="模糊搜索" oninput="debounceSearch()">
+  <input id="s_code" placeholder="物料编码" oninput="debounceSearch()">
+  <input id="s_name" placeholder="物料名称" oninput="debounceSearch()">
+  <input id="s_spec" placeholder="规格型号" oninput="debounceSearch()">
+  <input id="s_draw" placeholder="图纸代号" oninput="debounceSearch()">
+  <select id="s_attr"><option value="">全部属性</option><option>外购</option><option>自制</option><option>委外</option></select>
+  <select id="s_status"><option value="">全部状态</option><option>已审核</option><option>重新审核</option></select>
+  <button class="btn btn-blue" onclick="doSearch()">实时搜索</button>
+  <button class="btn btn-gray" onclick="resetSearch()">重置</button>
+ 
+</div>
+
+<div class="table-container">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:40px;">选</th>
+        <th style="width:120px;">物料编码</th>
+        <th style="width:140px;">物料名称</th>
+        <th style="width:260px;">规格型号</th>
+        <th style="width:120px;">图纸代号</th>
+        <th style="width:90px;">颜色色号</th>
+        <th style="width:90px;">图片</th>
+        <th style="width:90px;">数据状态</th>
+        <th style="width:60px;">禁用</th>
+        <th style="width:100px;">创建日期</th>
+        <th style="width:100px;">修改日期</th>
+        <th style="width:80px;">物料属性</th>
+        <th style="width:80px;">基本单位</th>
+        <th style="width:80px;">允许采购</th>
+        <th style="width:80px;">允许委外</th>
+        <th style="width:100px;">仓库</th>
+        <th style="width:160px;">备注</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div id="pagination"></div>
+
+<div id="modal">
+  <div class="box">
+    <h3 id="modalTitle">修改物料</h3>
+    <form id="editForm">
+      <input type="hidden" id="f_mode"><input type="hidden" id="f_id">
+      <div class="form-row"><label>编码</label><input id="f_code"><span class="tip" id="codeTip"></span></div>
+      <div class="form-row"><label>名称</label><input id="f_name"></div>
+      <div class="form-row"><label>规格</label><input id="f_spec" class="col-spec"></div>
+      <div class="form-row"><label>图纸</label><input id="f_drawing"></div>
+      <div class="form-row"><label>颜色</label><input id="f_color"></div>
+      <div class="form-row"><label>单位</label><input id="f_unit" value="Pcs"></div>
+      <div class="form-row"><label>属性</label><select id="f_attr"><option>外购</option><option>自制</option></select></div>
+      <div class="form-row"><label>仓库</label><input id="f_warehouse"></div>
+      <div class="form-row"><label>备注</label><textarea id="f_remark"></textarea></div>
+      <div style="text-align:right;">
+        <button type="button" class="btn btn-gray" onclick="closeModal()">取消</button>
+        <button type="submit" class="btn btn-blue">保存</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+ <script src="./material.js"></script>
+</body>
+</html>

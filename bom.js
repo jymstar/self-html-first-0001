@@ -16,10 +16,14 @@ const btnReset = document.getElementById('btnReset');
 const btnDrill = document.getElementById('btnDrill');
 
 
-// ============ 文件导入 ============
+// ============ 文件手动导入 ============
 fileInput.addEventListener('change', e => {
   const file = e.target.files[0];
   if (!file) return;
+
+  //手动导入标记
+  sessionStorage.setItem('manualImported', 'true');
+
   const reader = new FileReader();
   reader.onload = evt => {
     const text = evt.target.result;
@@ -34,6 +38,13 @@ fileInput.addEventListener('change', e => {
     currentPage = 1;
     renderPage(1);
     updateSummary();
+
+    
+    
+    // 手动导入成功，移除自动加载失败的提示
+  const tip = document.getElementById('autoLoadTip');
+  if (tip) tip.remove(); 
+
   };
   reader.readAsText(file, 'GBK');
 });
@@ -113,12 +124,13 @@ function renderPage(page) {
     const indent = lv > 0 ? '&nbsp;'.repeat(lv * 3) + '├─ ' : '';
 
     html += '<tr>';
-    html += `<td>${idx}</td>`;
-    
+    html += `<td>${idx}</td>`;    
     html += `<td><span class="${lvClass}">${esc(row['Level_no'])}</span></td>`;
     html += `<td>${esc(row['展开项次'])}</td>`;
-    html += `<td>${esc(row['子项物料编码'])}</td>`;
-    html += `<td>${esc(row['子项物料名称'])}</td>`;
+   // html += `<td>${esc(row['子项物料编码'])}</td>`;
+    html += `<td><span class="child-code" data-code="${esc(row['子项物料编码'])}" style="color:#1677ff;cursor:pointer;text-decoration:underline dotted;">${esc(row['子项物料编码'])}</span></td>`;
+    // html += `<td>${esc(row['子项物料名称'])}</td>`;
+    html += `<td><span class="child-code" data-code="${esc(row['子项物料名称'])}" style="color:#1677ff;cursor:pointer;text-decoration:underline dotted;">${esc(row['子项物料名称'])}</span></td>`;
     html += `<td>${esc(row['子项规格型号'])}</td>`;
     html += `<td>${esc(row['子项单位'])}</td>`;
     html += `<td>${esc(row['用量_分子'])}</td>`;
@@ -157,14 +169,15 @@ function updateSummary() {
   summary.innerHTML = `共 <b>${rows}</b> 行 | 涉及物料 <b>${parts}</b> 种 | 总用量 <b>${totalQty.toFixed(4)}</b> | 层级 <b>${lvRange}</b>`;
 }
 
-// ============ 筛选 ============
+// ============ 三大筛选 ============
 function initFilters() {
+    // 层级筛选，筛选值获取
   const levels = [...new Set(allData.map(r => r._levelNum))].sort((a, b) => a - b);
   levelFilter.innerHTML = '<option value="all">全部层级</option>';
   levels.forEach(l => {
     levelFilter.innerHTML += `<option value="${l}">L${l}</option>`;
   });
-
+   // 属性筛选，筛选值获取
   const props = [...new Set(allData.map(r => r['子项物料属性']).filter(Boolean))];
   propertyFilter.innerHTML = '<option value="all">全部属性</option>';
   props.forEach(p => {
@@ -173,7 +186,7 @@ function initFilters() {
 }
 
 function applyFilter() {
-  const kw = searchInput.value.trim().toLowerCase();
+  const kw = searchInput.value.trim().toLowerCase();   // 文字筛选，筛选值获取
   const lv = levelFilter.value;
   const prop = propertyFilter.value;
 
@@ -182,7 +195,7 @@ function applyFilter() {
     if (prop !== 'all' && row['子项物料属性'] !== prop) return false;
     if (kw) {
       const str = [
-        row['子项物料编码'], row['子项物料名称'],
+        row['子项物料编码'], row['子项物料名称'], row['子项规格型号'],
         row['父项物料编码'], row['父项物料名称']
       ].join(' ').toLowerCase();
       if (!str.includes(kw)) return false;
@@ -199,6 +212,7 @@ searchInput.addEventListener('input', applyFilter);
 levelFilter.addEventListener('change', applyFilter);
 propertyFilter.addEventListener('change', applyFilter);
 
+// 重置
 btnReset.addEventListener('click', () => {
   searchInput.value = '';
   levelFilter.value = 'all';
@@ -215,7 +229,7 @@ btnReset.addEventListener('click', () => {
 function drillToCode(code) {
   if (!code) return;
   drillStack.push({ filteredData: [...filteredData], page: currentPage });
-  filteredData = allData.filter(r => r['子项物料编码'] === code || r['父项物料编码'] === code);
+  filteredData = allData.filter(r => r['子项物料编码'] === code || r['子项物料名称'] === code);
   btnDrill.disabled = false;
   currentPage = 1;
   renderPage(1);
@@ -232,7 +246,7 @@ btnDrill.addEventListener('click', () => {
   updateSummary();
 });
 
-// ============ 工具 ============
+// ============ 符号处理安全工具 ============
 function esc(s) {
   if (!s) return '';
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -242,6 +256,9 @@ function esc(s) {
 
 
   // ============ 自动加载（整合版：GBK解码 + 强制初始化 + 手动兜底）============
+  const hasManualData = sessionStorage.getItem('manualImported');
+
+if (!hasManualData) {
 fetch('bomdata/bom展开20260930.csv')
   .then(r => {
     if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -266,11 +283,35 @@ fetch('bomdata/bom展开20260930.csv')
     }
   })
   .catch(err => {
-    console.error('自动加载失败，等待手动导入:', err);
-    // 核心兜底：即使请求失败，也强制初始化UI，确保手动导入不瘫痪
-    initFilters();
-    renderPage(1);
-    updateSummary();
-  });
+  console.error('自动加载失败，等待手动导:', err);
+  let tip = document.getElementById('autoLoadTip');
+  if (tip) tip.remove();
+  tip = document.createElement('div');
+  tip.id = 'autoLoadTip';
+  tip.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#ff9800;color:#fff;padding:20px 40px;border-radius:6px;font-size:16px;z-index:9999;';
+  tip.textContent = '自动加载失败，请手动导入';
+  document.body.appendChild(tip);
+
+  initFilters();
+  renderPage(1);
+  updateSummary();
+});
+  } else {
+  // 手动导入过，跳过自动加载
+  initFilters();
+  renderPage(1);
+  updateSummary();
+  // ✅ 加这一行：刷新后提醒重新导入
+  let tip = document.getElementById('autoLoadTip');
+  if (!tip) {
+    tip = document.createElement('div');
+    tip.id = 'autoLoadTip';
+    tip.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#ff9800;color:#fff;padding:20px 40px;border-radius:6px;font-size:16px;z-index:9999;';
+    tip.textContent = '页面已刷新，请重新手动导入 CSV 文件';
+    document.body.appendChild(tip);
+  }
+}
+
 
   document.getElementById('backtooa').onclick = () => location.href = './zhaolin.html';
+  document.getElementById('create_new_material_code').onclick = () => location.href = './material.html';
