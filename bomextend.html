@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOM 展开查询</title>
+<link rel="stylesheet" href="bomextend.css">
+</head>
+<body>
+
+<div class="container">
+  <div class="top-bar">
+     <h1>BOM 展开查询</h1>
+    <button id="create_new_material_code" style="margin-left: auto;">创建新物料编码</button>
+    <button id="create_new_bom_code" style="margin-left: auto;">创建新BOM</button>
+    <button id="backtooa" style="margin-left: auto;">返回办公系统</button>
+    </div>
+
+  <div class="filters">
+    <input type="text" id="topCodeInput" placeholder="输入成品物料编码" value="C.9703.Y.26.0109" style="width:200px;padding:6px 10px;border:1px solid #d9d9d9;border-radius:4px;">
+    <button id="btnExpand" class="btn-primary">展开BOM</button>
+    <input type="text" id="searchInput" placeholder="模糊搜索（编码/名称/规格）" style="width:260px;padding:6px 10px;border:1px solid #d9d9d9;border-radius:4px;">
+    <select id="levelFilter" style="padding:6px 10px;border:1px solid #d9d9d9;border-radius:4px;"></select>
+    <select id="unitFilter" style="padding:6px 10px;border:1px solid #d9d9d9;border-radius:4px;"></select>
+    <select id="propFilter" style="padding:6px 10px;border:1px solid #d9d9d9;border-radius:4px;"></select>
+    <button id="btnReset" style="padding:6px 14px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;cursor:pointer;">重置筛选</button>
+    <button id="btnExport" style="padding:6px 14px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;cursor:pointer;">导出CSV</button>
+    <button id="btnDrillMode" style="padding:6px 14px;border:1px solid #d9d9d9;border-radius:4px;background:#fff;cursor:pointer;">钻取模式：关</button>
+  </div>
+
+  <div id="summary" class="summary"></div>
+
+  <div class="table-wrap">
+    <table id="dataTable">
+      <thead id="tableHead"></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="pagination" id="pagination"></div>
+</div>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">子项明细</h3>
+      <span class="modal-close" id="modalClose">&times;</span>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+<!-- 1. 先引库 -->
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+<!-- 2. 再引你的业务代码 -->
+<script src="bomextend.js"></script>
+
+
+
+</body>
+</html>

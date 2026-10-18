@@ -315,3 +315,6 @@ fetch('bomdata/bom展开20260930.csv')
 
   document.getElementById('backtooa').onclick = () => location.href = './zhaolin.html';
   document.getElementById('create_new_material_code').onclick = () => location.href = './material.html';
+  document.getElementById('create_new_bom_code').onclick = () => location.href = './bomlist.html';
+  
+  document.getElementById('create_new_bom_search').onclick = () => location.href = './bomextend.html';

@@ -4,7 +4,7 @@
   .search-row{margin:10px 15px;background:#fff;padding:10px;border-radius:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
   .search-row input,.search-row select{padding:5px 8px;border:1px solid #ccc;border-radius:4px;max-width: 150px;}
   .btn{padding:5px 12px;border:0;border-radius:4px;cursor:pointer;color:#fff;}
-  .btn-blue{background:#2f80ed;} .btn-gray{background:#888;} .btn-orange{background:#f2994a;} .btn-green{background:#27ae60;} .btn-red{background:#eb5757;}
+  .btn-blue{background:#2f80ed;} .btn-blue{background:#1809e8;} .btn-orange{background:#f2994a;} .btn-green{background:#27ae60;} .btn-red{background:#eb5757;}
   .table-container{margin:0 15px;background:#fff;border-radius:6px;overflow:auto;max-height:70vh;}
   table{border-collapse:collapse;width:100%;font-size:13px;}
   th,td{border:1px solid #eee;padding:6px 8px;white-space:nowrap;}

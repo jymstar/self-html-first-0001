@@ -1,0 +1,302 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  background: #f0f2f5;
+  font-size: 13px;
+  color: #333;
+}
+
+.container {
+  max-width: 100%;
+  padding: 16px 24px;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #1a1a1a;
+}
+
+.top-bar {
+  background: #fff; padding: 12px 16px; border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.top-bar h1 { font-size: 20px; color: #1a1a1a; }
+.top-bar input[type=file] { display: none; background-color: #52c41a;}
+.top-bar button {
+  padding: 6px 14px; border: 1px solid #d9d9d9; border-radius: 4px;
+  background: #3413ef; color: #fff; cursor: pointer; font-size: 13px;
+}
+.top-bar button#backtooa {
+  padding: 6px 14px; border: 1px solid #d9d9d9; border-radius: 4px;
+  background: #f11606; color: #fff; cursor: pointer; font-size: 13px;
+}
+.top-bar button:hover { background: #d164a5; }
+.top-bar .hint { color: #888686; font-size: 12px; background-color: #dbdbdc;}
+
+/* 筛选栏 */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.filters input[type="text"],
+.filters select {
+  padding: 6px 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.filters button {
+  padding: 6px 14px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all .2s;
+}
+
+.filters button:hover {
+  border-color: #1890ff;
+  color: #1890ff;
+}
+
+.btn-primary {
+  background: #1890ff !important;
+  border-color: #1890ff !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background: #40a9ff !important;
+  border-color: #40a9ff !important;
+}
+
+#btnDrillMode.active {
+  background: #52c41a;
+  border-color: #52c41a;
+  color: #fff;
+}
+
+/* 汇总 */
+.summary {
+  padding: 8px 12px;
+  background: #e6f7ff;
+  border: 1px solid #bae7ff;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: #0050b3;
+}
+
+/* 表格 */
+.table-wrap {
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #e8e8e8;
+  overflow: auto;
+  max-height: calc(100vh - 220px);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #fafafa;
+  z-index: 10;
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #e8e8e8;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+thead th:hover {
+  background: #f0f0f0;
+}
+
+tbody td {
+  padding: 7px 8px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: top;
+  max-width: 260px;
+  word-break: break-all;
+}
+
+tbody tr:hover {
+  background: #f5f5f5;
+}
+
+/* 层级缩进 */
+.level-0 { padding-left: 2px; }
+.level-1 { padding-left: 6px; }
+.level-2 { padding-left: 10px; }
+.level-3 { padding-left: 14px; }
+.level-4 { padding-left: 18px; }
+.level-5 { padding-left: 22px; }
+
+/* 物料编码可点击 */
+.code-link {
+  color: #1890ff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.code-link:hover {
+  color: #40a9ff;
+}
+
+/* 分页 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.pagination button {
+  padding: 4px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.pagination button:disabled {
+  color: #bfbfbf;
+  cursor: not-allowed;
+}
+
+.pagination button.active {
+  background: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+}
+
+.pagination span {
+  font-size: 13px;
+  color: #666;
+}
+
+/* 弹窗 */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 900px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.modal-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal-close {
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #333;
+}
+
+.modal-body {
+  padding: 16px 20px;
+  overflow: auto;
+  flex: 1;
+}
+
+/* 用量列右对齐 */
+td.qty-col {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 层级标签 */
+.level-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.level-badge-0 { background: #fff1f0; color: #cf1322; }
+.level-badge-1 { background: #fff7e6; color: #d46b08; }
+.level-badge-2 { background: #fcffe6; color: #7cb305; }
+.level-badge-3 { background: #f6ffed; color: #389e0d; }
+.level-badge-4 { background: #e6f7ff; color: #096dd9; }
+.level-badge-5 { background: #f9f0ff; color: #722ed1; }
+
+
+/* 恢复原生 select 基础样式，防止被盖住 */
+select {
+  appearance: auto;
+  -webkit-appearance: auto;
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  min-width: 80px;
+}
+/* 下拉选项正常显示 */
+select option {
+  background: #fff;
+  color: #333;
+  padding: 4px;
+}
+/* 筛选栏布局，防止遮挡 */
+.filter-bar {
+  position: relative;
+  z-index: 10;
+}

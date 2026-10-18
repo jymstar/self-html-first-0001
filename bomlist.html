@@ -8,14 +8,15 @@
 <body>
 
 <div class="top">
-  <div class="title">📋 物料清单主数据</div>
+  <div class="title">📋 创建新BOM</div>
   <input type="file" id="fileInput" accept=".csv">
   <span id="importTip">已导入 0 条</span>
   <span style="margin-left:auto;color:#27ae60;" id="saveTip"></span>
   <button class="btn btn-orange" onclick="openEdit('edit')">修改</button>
   <button class="btn btn-green" onclick="openEdit('copy')">复制新建</button>
   <button class="btn btn-red" onclick="doDelete()">删除</button>
-  <button class="btn btn-gray" onclick="history.back()">返回物料查看</button>
+  <button id="create_new_bom_search" style="margin-left: auto;">BOM展开查询</button>
+  <button class="btn btn-gray" onclick="history.back()">返回BOM查看</button>
 </div>
 
 <div class="search-row">
