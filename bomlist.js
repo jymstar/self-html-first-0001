@@ -202,10 +202,9 @@ if(all.length===0){
 }
 renderPage();
 
-document.getElementById('btn btn-gray').onclick = () => location.href = './bom.html';
- 
 
- document.getElementById('backtooa').onclick = () => location.href = './zhaolin.html';
-  document.getElementById('create_new_material_code').onclick = () => location.href = './material.html';
-  document.getElementById('create_new_bom_code').onclick = () => location.href = './bomlist.html';
-    document.getElementById('create_new_bom_search').onclick = () => location.href = './bomextend.html';
+
+document.getElementById('backtooa').onclick = () => location.href = './zhaolin.html';
+document.getElementById('create_new_material_code').onclick = () => location.href = './material.html';
+
+  document.getElementById('create_new_bom_search').onclick = () => location.href = './bomextend.html';
