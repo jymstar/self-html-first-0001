@@ -1,4 +1,4 @@
-// ============ 全局状态 ============
+//// 此版保存了原始的样本拓展数据，暂时未删除 ============ 全局状态 ============
 let currentPage = 1;
 const PAGE_SIZE = 100;
 let sortCol = null;
@@ -195,6 +195,42 @@ function buildMaterialMap(data) {
 
 
 
+// ============ 加载示例展开数据 ============
+function loadExpandedBomCSV() {
+  fetch('bomdata/bom展开20260930.csv')
+    .then(r => r.arrayBuffer())
+    .then(buf => {
+      const text = new TextDecoder('gb18030', { fatal: false }).decode(buf);
+      if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
+      const lines = text.split(/\r?\n/).filter(l => l.trim());
+      if (lines.length < 2) return;
+      const headers = splitCsvLine(lines[0]);
+      const result = [];
+      for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        const cols = splitCsvLine(lines[i]);
+        if (cols.length < headers.length) continue;
+        const row = {};
+        headers.forEach((h, idx) => { row[h] = cols[idx] || ''; });
+        const num = parseFloat(row['用量_分子']) || 0;
+        const den = parseFloat(row['用量_分母']) || 1;
+        row['_qty'] = den !== 0 ? num / den : 0;
+        row['_levelNum'] = parseInt(row['Level_no']) || 0;
+        row['_levelRaw'] = String(row['Level_no'] || '0');
+        result.push(row);
+      }
+      sampleData = result;
+      // allData = result;
+      filteredData = [...sampleData];
+      initFilters();
+      renderPage(1);
+      updateSummary();
+    })
+    .catch(err => {
+      console.log('示例展开数据加载失败（可忽略）:', err);
+      initFilters();
+    });
+}
 
 
 
@@ -352,7 +388,7 @@ console.log('渲染检查', childCode, 'parametre:', matInfo.parametre, 'specMod
         '子项物料名称': realChildName,
         '规格型号': specModel,
         '单位': childUnit,
-        '用量(分子)': parseFloat(child['fenzi']) || 0,   // ✅ 对齐表头
+        '用量(分子)': fenzi,
         '用量(分母)': fenmu,
         '子项物料属性': childAttr || '',   // childAttr 是你上面算的 matInfo.buy_type
         '_qty': fenzi
@@ -456,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
   bindEvents();
   loadMaterialData();        // ← 加载主数据 + 自动建映射
   loadRawBomData();         // ← 加载BOM数据（内部不再调 loadMaterialMaster）
-  
+  loadExpandedBomCSV();
 });
 
 // 加载物料主数据
@@ -827,3 +863,6 @@ window.addEventListener('DOMContentLoaded', () => {
     expandBOM('C.9801.G.26.0321');
   }, 100); 
 });
+
+
+// 此版保存了原始的样本拓展数据，暂时未删除

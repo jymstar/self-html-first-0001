@@ -374,6 +374,8 @@ console.log('渲染检查', childCode, 'parametre:', matInfo.parametre, 'specMod
 
   filteredData = result;
   allData = result;
+  // expandBOM 里，数据已经 push 进 tableData / filteredData / allData 之后
+   initFilters();
   renderPage(1);
   updateSummary(result);
   // 强制把正确数据渲染到规格列，不干扰旧表格
@@ -384,6 +386,7 @@ setTimeout(() => {
   });
 }, 50); // 等旧renderPage画完
   return result;
+
 }
 
 
@@ -649,7 +652,7 @@ function initFilters() {
 
   filteredData.forEach(r => {
     if (r['Level_no'] !== undefined && r['Level_no'] !== null && r['Level_no'] !== '') levelSet.add(String(r['Level_no']));
-    if (r['子项单位']) unitSet.add(r['子项单位']);
+     if (r['单位']) unitSet.add(r['单位']);           // ← 改成 '单位'
     if (r['子项物料属性']) propSet.add(r['子项物料属性']);
   });
 
@@ -817,13 +820,13 @@ function exportCSV() {
  document.getElementById('create_new_bom_code').onclick = () => location.href = './bomlist.html';
 
 window.addEventListener('DOMContentLoaded', () => {
-  // 1. 先同步输入框为目标编码
-  const input = document.querySelector('input[value="C.9703.Y.26.0109"]'); 
-  if(input) {
-    input.value = 'C.9801.G.26.0321';
-  }
-  // 2. 延迟一点确保内部数据就绪（如果原本点按钮正常，加延时最稳）
+  const input = document.getElementById('topCodeInput');
+  if (input) input.value = 'C.9801.G.26.0321';
+  
+  // 原来藏在 loadExpandedBomCSV 里的这行，现在直接调
+  // initFilters();
+  
   setTimeout(() => {
     expandBOM('C.9801.G.26.0321');
-  }, 100); 
+  }, 100);
 });
