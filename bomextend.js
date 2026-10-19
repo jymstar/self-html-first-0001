@@ -195,42 +195,6 @@ function buildMaterialMap(data) {
 
 
 
-// ============ 加载示例展开数据 ============
-function loadExpandedBomCSV() {
-  fetch('bomdata/bom展开20260930.csv')
-    .then(r => r.arrayBuffer())
-    .then(buf => {
-      const text = new TextDecoder('gb18030', { fatal: false }).decode(buf);
-      if (text.charCodeAt(0) === 0xFEFF) text = text.slice(1);
-      const lines = text.split(/\r?\n/).filter(l => l.trim());
-      if (lines.length < 2) return;
-      const headers = splitCsvLine(lines[0]);
-      const result = [];
-      for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].trim()) continue;
-        const cols = splitCsvLine(lines[i]);
-        if (cols.length < headers.length) continue;
-        const row = {};
-        headers.forEach((h, idx) => { row[h] = cols[idx] || ''; });
-        const num = parseFloat(row['用量_分子']) || 0;
-        const den = parseFloat(row['用量_分母']) || 1;
-        row['_qty'] = den !== 0 ? num / den : 0;
-        row['_levelNum'] = parseInt(row['Level_no']) || 0;
-        row['_levelRaw'] = String(row['Level_no'] || '0');
-        result.push(row);
-      }
-      sampleData = result;
-      // allData = result;
-      filteredData = [...sampleData];
-      initFilters();
-      renderPage(1);
-      updateSummary();
-    })
-    .catch(err => {
-      console.log('示例展开数据加载失败（可忽略）:', err);
-      initFilters();
-    });
-}
 
 
 
@@ -308,26 +272,55 @@ function expandBOM(topCode) {
 
     // 按 son_no 排序
     children.sort((a, b) => (parseInt(a['son_no']) || 0) - (parseInt(b['son_no']) || 0));
-
+// 放在 forEach 前
+console.log('【入口】children长度:', children?.length, 'level:', level, 'parent:', parentCode);
     children.forEach((child, i) => {
+      // 临时：无条件打第1条，防 i 异常
+  if (i === 0) {
+    console.log('【强制第1条】KEYS:', Object.keys(child));
+    console.log('【强制第1条】全量:', JSON.stringify(child));
+    console.log('【强制第1条】son_id:', child['son_id'], '规格型号:', child['规格型号']);
+  }
+// ✅ 真正探测 BOM 子项（0930）表头，前3条全打
+  if (i < 3) {
+    console.log(`【BOM子项探测 i=${i}】KEYS:`, Object.keys(child));
+    console.log(`【BOM子项探测 i=${i}】全量:`, JSON.stringify(child));
+    const _code = (child['son_id'] || '').replace(/^﻿|[\s\t\r\n]/g, '').trim();
+    console.log(`【BOM子项探测 i=${i}】son_id=>${_code}`);
+    console.log(`【BOM子项探测 i=${i}】规格候选值:`, 
+      '规格型号:', child['规格型号'], 
+      '子项规格:', child['子项规格'], 
+      '规格:', child['规格'],
+      'parametre:', getMatInfo(_code)?.parametre
+    );
+  }
+
       const seq = parseInt(child['son_no']) || (i + 1);
+
       const curSeq = seqPrefix
         ? seqPrefix + '_' + String(seq).padStart(2, '0')
         : String(seq).padStart(2, '0');
+
+     
+
 
       // BOM表字段取值
       const childCode = (child['son_id'] || '').replace(/^﻿|[\s\t\r\n]/g, '').trim();
       const realChildName = child['s_material_name'] || '';   // BOM表自带名称
       const childUnit = child['unit'] || '';
-      const fenzi = child['fenzi'] !== undefined && child['fenzi'] !== '' ? Number(child['fenzi']) : '';
-      const fenmu = child['fenmu'] !== undefined && child['fenmu'] !== '' ? Number(child['fenmu']) : '';
+     // const fenzi = child['fenzi'] !== undefined && child['fenzi'] !== '' ? Number(child['fenzi']) : '';
+     // const fenmu = child['fenmu'] !== undefined && child['fenmu'] !== '' ? Number(child['fenmu']) : '';
+     const fenzi = child['fenzi'] !== undefined && child['fenzi'] !== '' ? Number(child['fenzi']) : (child['用量_分子'] || child['分子'] || '');
+     const fenmu = child['fenmu'] !== undefined && child['fenmu'] !== '' ? Number(child['fenmu']) : (child['用量_分母'] || child['分母'] || '');
 
       // 主数据取值（规格、属性）
      const matInfo = getMatInfo(childCode);
      // 确保和映射返回的键名 parametre 完全一致，兼容拼写差异
-     const specModel = (getMatInfo(childCode).parametre || child['规格型号'] || '').trim();
+     //const specModel = (getMatInfo(childCode).parametre || child['规格型号'] || '').trim();
+     //const specModel = (getMatInfo(childCode).parametre || child['规格型号'] || child['子项规格型号'] || '').trim();
      const childAttr = matInfo.buy_type || '';  
-
+// 规格仅来自主数据 parametre（BOM无规格字段）
+const specModel = (matInfo?.parametre || '').trim();
       // 父项名称
       let realParentName = '';
       if (level === 1) {
@@ -338,6 +331,8 @@ function expandBOM(topCode) {
   // 深层：parentCode 就是上层的 childCode，从主数据或BOM表取名称
   const pInfo = getMatInfo(parentCode);
   realParentName = pInfo.name || parentCode;
+
+
 
 console.log('渲染检查', childCode, 'parametre:', matInfo.parametre, 'specModel:', specModel);
 //console.log('最终规格列HTML:', rowHtml.includes(specModel) ? '✅已写入' : '❌未写入');
@@ -357,8 +352,8 @@ console.log('渲染检查', childCode, 'parametre:', matInfo.parametre, 'specMod
         '子项物料名称': realChildName,
         '规格型号': specModel,
         '单位': childUnit,
-        '用量(分子)': child['fenzi'] || '',
-        '用量(分母)': child['fenmu'] || '',
+        '用量(分子)': parseFloat(child['fenzi']) || 0,   // ✅ 对齐表头
+        '用量(分母)': fenmu,
         '子项物料属性': childAttr || '',   // childAttr 是你上面算的 matInfo.buy_type
         '_qty': fenzi
       });
@@ -461,7 +456,7 @@ document.addEventListener('DOMContentLoaded', () => {
   bindEvents();
   loadMaterialData();        // ← 加载主数据 + 自动建映射
   loadRawBomData();         // ← 加载BOM数据（内部不再调 loadMaterialMaster）
-  loadExpandedBomCSV();
+  
 });
 
 // 加载物料主数据
@@ -818,7 +813,17 @@ function exportCSV() {
 
 
  document.getElementById('backtooa').onclick = () => location.href = './zhaolin.html';
-  document.getElementById('create_new_material_code').onclick = () => location.href = './material.html';
-  document.getElementById('create_new_bom_code').onclick = () => location.href = './bomlist.html';
-   document.getElementById('create_new_bom_search').onclick = () => location.href = './bomextend.html'; 
+ document.getElementById('create_new_material_code').onclick = () => location.href = './material.html';
+ document.getElementById('create_new_bom_code').onclick = () => location.href = './bomlist.html';
 
+window.addEventListener('DOMContentLoaded', () => {
+  // 1. 先同步输入框为目标编码
+  const input = document.querySelector('input[value="C.9703.Y.26.0109"]'); 
+  if(input) {
+    input.value = 'C.9801.G.26.0321';
+  }
+  // 2. 延迟一点确保内部数据就绪（如果原本点按钮正常，加延时最稳）
+  setTimeout(() => {
+    expandBOM('C.9801.G.26.0321');
+  }, 100); 
+});
