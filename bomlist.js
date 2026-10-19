@@ -134,7 +134,14 @@ function renderPage(){
 }
 function goPage(p){ currentPage=p; renderPage(); }
 function jumpToPage(max){ const v=parseInt(document.getElementById('jumpPage').value); if(v>=1&&v<=max){currentPage=v;renderPage();} }
-function selectRow(id){ selectedId=id; renderPage(); }
+function selectRow(id) {
+  // 如果当前有文字被选中，说明用户在划选复制，不触发行选中
+  const sel = window.getSelection();
+  if (sel && sel.toString().length > 0) return;
+  
+  selectedId = id;
+  renderPage();
+}
 function getSelected(){ return all.find(x=>x._id===selectedId); }
 
 function openEdit(mode){
@@ -208,3 +215,5 @@ document.getElementById('backtooa').onclick = () => location.href = './zhaolin.h
 document.getElementById('create_new_material_code').onclick = () => location.href = './material.html';
 
   document.getElementById('create_new_bom_search').onclick = () => location.href = './bomextend.html';
+
+

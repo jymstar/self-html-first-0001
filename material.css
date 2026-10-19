@@ -52,3 +52,13 @@ table th:nth-child(4), table td:nth-child(4) {
   white-space: normal !important;
   word-break: break-all;
 }
+
+/* 表格内容强制允许复制 */
+table tbody td {
+  user-select: text !important;
+  -webkit-user-select: text !important;
+}
+/* 第一列（单选框）保持不可复制，避免干扰 */
+table tbody td:first-child {
+  user-select: none !important;
+}
